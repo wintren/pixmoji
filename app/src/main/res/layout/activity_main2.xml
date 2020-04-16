@@ -1,152 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<rocks.wintren.pixmoji.ZoomLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="10dp"
-    android:weightSum="2"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
+
 
     <LinearLayout
-        android:id="@+id/textEmojis"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:layout_weight="1"
-        android:background="@drawable/outline"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="2"
+        tools:context=".MainActivity">
 
-        <TextView
-            android:layout_width="40px"
-            android:layout_height="40px"
-            android:layout_margin="16dp"
+        <LinearLayout
+            android:id="@+id/textEmojis"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
             android:background="@drawable/outline"
-            android:includeFontPadding="false"
-            android:text="🌋"
-            android:gravity="center"
-            android:textSize="12sp" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="52px"
-            android:layout_height="52px"
-            android:layout_margin="16dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="🌋"
+                android:textSize="7sp" />
+
+            <TextView
+                android:layout_width="52px"
+                android:layout_height="52px"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="🌋"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:layout_width="76px"
+                android:layout_height="76px"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="🌋"
+                android:textSize="24sp" />
+
+
+            <TextView
+                android:layout_width="40px"
+                android:layout_height="40px"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="↙"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:layout_width="52px"
+                android:layout_height="52px"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="↙"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:layout_width="76px"
+                android:layout_height="76px"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="↙"
+                android:textSize="24sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bitmapEmojis"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
             android:background="@drawable/outline"
-            android:includeFontPadding="false"
-            android:text="🌋"
-            android:gravity="center"
-            android:textSize="16sp" />
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/bitmap1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:includeFontPadding="false" />
+
+            <ImageView
+                android:id="@+id/bitmap2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:includeFontPadding="false" />
 
 
-        <TextView
-            android:layout_width="76px"
-            android:layout_height="76px"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false"
-            android:text="🌋"
-            android:gravity="center"
-            android:textSize="24sp" />
+            <ImageView
+                android:id="@+id/bitmap3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:includeFontPadding="false" />
 
 
-        <TextView
-            android:layout_width="40px"
-            android:layout_height="40px"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false"
-            android:text="↙"
-            android:gravity="center"
-            android:textSize="12sp" />
+            <ImageView
+                android:id="@+id/bitmap4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:includeFontPadding="false" />
 
 
-        <TextView
-            android:layout_width="52px"
-            android:layout_height="52px"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false"
-            android:text="↙"
-            android:gravity="center"
-            android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/bitmap5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:includeFontPadding="false" />
 
 
-        <TextView
-            android:layout_width="76px"
-            android:layout_height="76px"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false"
-            android:text="↙"
-            android:gravity="center"
-            android:textSize="24sp" />
+            <ImageView
+                android:id="@+id/bitmap6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@drawable/outline"
+                android:includeFontPadding="false" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/bitmapEmojis"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
-        android:layout_weight="1"
-        android:background="@drawable/outline"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/bitmap1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false" />
-
-        <ImageView
-            android:id="@+id/bitmap2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false" />
-
-
-        <ImageView
-            android:id="@+id/bitmap3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false" />
-
-
-        <ImageView
-            android:id="@+id/bitmap4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false" />
-
-
-        <ImageView
-            android:id="@+id/bitmap5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false" />
-
-
-        <ImageView
-            android:id="@+id/bitmap6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:background="@drawable/outline"
-            android:includeFontPadding="false" />
-
-    </LinearLayout>
-
-
-</LinearLayout>
+</rocks.wintren.pixmoji.ZoomLayout>

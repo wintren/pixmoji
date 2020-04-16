@@ -22,7 +22,7 @@ class EmojiBitmapFactory(
 
     private fun createEmojiTextView(emoji: String): TextView {
         return TextView(context).apply {
-                val sideLength = scale.pixelSide
+                val sideLength = scale.moxelSize
             layoutParams = ViewGroup.LayoutParams(sideLength, sideLength)
             gravity = Gravity.CENTER
             text = emoji
@@ -36,7 +36,7 @@ class EmojiBitmapFactory(
     private fun TextView.toBitmap(): Bitmap {
         val view = this
 //        if (width > 0 && height > 0) {
-        val sideLength = scale.pixelSide
+        val sideLength = scale.moxelSize
             view.measure(
                 View.MeasureSpec.makeMeasureSpec(sideLength, View.MeasureSpec.EXACTLY),
                 View.MeasureSpec.makeMeasureSpec(sideLength, View.MeasureSpec.EXACTLY)
@@ -141,11 +141,22 @@ class EmojiBitmapFactory(
     }
 
 
-    enum class EmojiScale(val textSize: Float, val pixelSide: Int) {
+    enum class EmojiScale(
+        /**
+         * The sp used to create the Emoji
+         */
+        val textSize: Float,
+        /**
+         * The quadratic size of the EmojiBitmap: Pixels per side.
+         */
+        val moxelSize: Int
+    ) {
         // The values are maybe not perfect but they're pretty and good enough for now!
-        Small(12f, 40),
-        Medium(16f, 52),
-        Large(24f, 76)
+        Tiny(7f, 22),
+        Small(10f, 32),
+        Medium(12f, 40),
+        Large(16f, 52),
+        Huge(24f, 76)
     }
 
 }

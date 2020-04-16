@@ -13,7 +13,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.get
 import androidx.core.graphics.set
 import kotlinx.android.synthetic.main.activity_main.*
-import rocks.wintren.pixmoji.EmojiBitmapFactory.EmojiScale.*
+import kotlin.math.max
 import kotlin.math.sqrt
 
 val colors = listOf(Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.WHITE, Color.BLACK)
@@ -32,14 +32,29 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        quantifySonic()
-        emojiSonic()
+        // acitivrty_main
+//        testImage.setImageDrawable(getDrawableFromAssets("link.jpg"))
+
+
+        val file = "link.jpg"
+        val emojiScale = EmojiBitmapFactory.EmojiScale.Tiny
+        val imageScale = 6000
+        val drawable = getDrawableFromAssets(file)
+
+        originalImage.setImageDrawable(drawable.mutate())
+
+        val originalBitmap = drawable.mutate().scaledBitmap(emojiScale, imageScale)
+        originalImage.setImageBitmap(originalBitmap)
+        val emojiMatrix = originalBitmap.toEmojiMatrix()
+        val result = buildBitmap(emojiMatrix, emojiScale)
+        emojiImage.setImageBitmap(result)
+
 
         // SUPER TODO !!!! in BuildBitmap
         // TODO refactor with merge technique instead of moving pixels
 
         // activity_main2
-//        val factory = EmojiBitmapFactory(this, Large)
+//        val factory = EmojiBitmapFactory(this, EmojiBitmapFactory.EmojiScale.Large)
 //
 //        bitmapEmojis.children.toList().forEach {
 //            if (it !is ImageView) return@forEach
@@ -61,9 +76,43 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun getDrawableFromAssets(fileName: String): Drawable {
+        // get input stream
+        val imageStream = assets.open(fileName)
+        // load image as Drawable
+        return Drawable.createFromStream(imageStream, null).also {
+            imageStream.close()
+        }
+    }
 
+    private fun Drawable.scaledBitmap(
+        scale: EmojiBitmapFactory.EmojiScale,
+        imageScale: Int
+    ): Bitmap {
+
+        val predictedWidth = intrinsicWidth * scale.moxelSize
+        val predictedHeight = intrinsicHeight * scale.moxelSize
+
+        log("Original: ${intrinsicWidth}x${intrinsicHeight}")
+        log("Predicted: ${predictedWidth}x${predictedHeight}")
+
+        val (width: Int, height: Int) = if (predictedWidth > imageScale || predictedHeight > imageScale) {
+            val longestPredictedSide = max(predictedHeight, predictedWidth)
+            val downScaleFactor: Float = imageScale / longestPredictedSide.toFloat()
+            val scaledWidth = intrinsicWidth * downScaleFactor
+            val scaledHeight = intrinsicHeight * downScaleFactor
+            scaledWidth.toInt() to scaledHeight.toInt()
+        } else {
+            intrinsicWidth to intrinsicHeight
+        }
+        log("Scaled Bitmap: ${width}x${height}")
+        return this.toBitmap(width, height)
+
+    }
+
+//    override fun onResume() {
+//        super.onResume()
+//
 //        textEmojis.onLayout {
 //            val imageViews = bitmapEmojis.children.toList().map { it as? ImageView }.filterNotNull()
 //            textEmojis.children.forEachIndexed { index, view ->
@@ -76,7 +125,7 @@ class MainActivity : AppCompatActivity() {
 //                log("Bitmap size: ${bitmap.width}x${bitmap.height}")
 //            }
 //        }
-    }
+//    }
 
     fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
         if (width > 0 && height > 0) {
@@ -103,25 +152,25 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun emojiSonic() {
-        val sonicBitmap = setSonicReturnBitmap()
-        val pixelColorMatrix: Array<Array<Int>> = Array(sonicBitmap.width) { Array(sonicBitmap.height) { 0 } }
+//        val sonicBitmap: Bitmap = TODO() //setSonicReturnBitmap()
+//        val emojiMatrix = emojiMatrix(sonicBitmap)
 
-        for (col in 0 until sonicBitmap.width) {
-            for (row in 0 until sonicBitmap.height) {
-                pixelColorMatrix[col][row] = sonicBitmap[col, row]
+
+//        val result = buildBitmap(emojiMatrix, Small)
+
+    }
+
+    private fun Bitmap.toEmojiMatrix(): List<List<String>> {
+        val pixelColorMatrix: Array<Array<Int>> =
+            Array(width) { Array(height) { 0 } }
+
+        for (col in 0 until width) {
+            for (row in 0 until height) {
+                pixelColorMatrix[col][row] = this[col, row]
             }
         }
 
-        val emojiMatrix = pixelColorMatrix
-            .map { columns ->
-            columns.map { pixel ->
-                getClosestEmoji(pixel)
-            }
-        }
-
-
-        val result = buildBitmap(emojiMatrix, Large)
-        emojiImage.setImageBitmap(result)
+        return pixelColorMatrix.map { columns -> columns.map { pixel -> getClosestEmoji(pixel) } }
     }
 
     private fun buildBitmap(
@@ -131,7 +180,7 @@ class MainActivity : AppCompatActivity() {
 
         val emojiColumns = emojiMatrix.size
         val emojiRows = emojiMatrix.first().size
-        val singleEmojiSide = scale.pixelSide
+        val singleEmojiSide = scale.moxelSize
         val resultArtworkWidth = emojiColumns * singleEmojiSide
         val resultArtworkHeight = emojiRows * singleEmojiSide
 
@@ -165,19 +214,6 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-
-    private fun setSonicReturnBitmap(): Bitmap {
-        // get input stream
-        val imageStream = assets.open("mario_cart.jpg")
-        // load image as Drawable
-        val drawable = Drawable.createFromStream(imageStream, null)
-        // set image to ImageView
-        originalImage.setImageDrawable(drawable)
-        imageStream.close()
-
-        val bitmap = drawable.toBitmap()
-        return bitmap
-    }
 }
 
 // Mario
