@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        val result = buildBitmap(emojiMatrix, Small)
+        val result = buildBitmap(emojiMatrix, Large)
         emojiImage.setImageBitmap(result)
     }
 
@@ -128,43 +128,35 @@ class MainActivity : AppCompatActivity() {
         emojiMatrix: List<List<String>>,
         scale: EmojiBitmapFactory.EmojiScale
     ): Bitmap {
-        val totalMemory = Runtime.getRuntime().totalMemory();
-        val freeMemory = Runtime.getRuntime().freeMemory();
 
-        log("total memory: $totalMemory")
-        log("free memory: $freeMemory")
-
-        val moxelSide = emojiMatrix.size
+        val emojiColumns = emojiMatrix.size
+        val emojiRows = emojiMatrix.first().size
         val singleEmojiSide = scale.pixelSide
-        val resultArtworkSide = moxelSide * singleEmojiSide
-        log("Moxel side = $moxelSide")
-        log("Single Emoji Side = $singleEmojiSide")
-        log("Result Artwork Side = $resultArtworkSide")
+        val resultArtworkWidth = emojiColumns * singleEmojiSide
+        val resultArtworkHeight = emojiRows * singleEmojiSide
+
+        log("Emoji size: ${singleEmojiSide}x${singleEmojiSide}")
+        log("Original Image: ${emojiColumns}x${emojiRows}")
+        log("Result Artwork Side: ${resultArtworkWidth}x${resultArtworkHeight}")
 
         // We might be drawing and reading wrong x2 so it ends up correct, but it evens out :P
 
         // SUPER TODO !!!!
         // TODO refactor with merge technique instead of moving pixels
 
-        return Bitmap.createBitmap(resultArtworkSide, resultArtworkSide, Bitmap.Config.ARGB_8888)
+        return Bitmap.createBitmap(resultArtworkWidth, resultArtworkHeight, Bitmap.Config.ARGB_8888)
             .also { result ->
                 val emojiFactory = EmojiBitmapFactory(this, scale)
-                for (col in 0 until moxelSide) {
-                    for (row in 0 until moxelSide) {
-//                        log("col: $col")
-//                        log("row: $row")
+                for (col in 0 until emojiColumns) {
+                    for (row in 0 until emojiRows) {
 
                         val emoji = emojiMatrix[col][row]
-                        log("Emoji: $emoji")
+//                        log("Emoji: $emoji")
                         val emojiBitmap = emojiFactory.createBitmap(emoji)
-//                        log("emoji bitmap: [${emojiBitmap.width}][${emojiBitmap.height}]")
-
                         for (emojiCol in 0 until emojiBitmap.width) {
                             val x = col * singleEmojiSide + emojiCol
-//                            log("x: $x")
                             for (emojiRow in 0 until emojiBitmap.height) {
                                 val y = row * singleEmojiSide + emojiRow
-//                                log("y: $y")
                                 result[x, y] = emojiBitmap[emojiCol, emojiRow]
                             }
                         }
@@ -176,7 +168,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSonicReturnBitmap(): Bitmap {
         // get input stream
-        val imageStream = assets.open("pikachu.jpg")
+        val imageStream = assets.open("mario_cart.jpg")
         // load image as Drawable
         val drawable = Drawable.createFromStream(imageStream, null)
         // set image to ImageView
@@ -187,6 +179,11 @@ class MainActivity : AppCompatActivity() {
         return bitmap
     }
 }
+
+// Mario
+// Emoji size: 76x76
+// Original Image: 300x256
+// Result Artwork Side: 22800x19456
 
 fun mergeBitmap(fr: Bitmap, sc: Bitmap): Bitmap {
 
