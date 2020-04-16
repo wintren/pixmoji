@@ -2,10 +2,7 @@ package rocks.wintren.pixmoji
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
-import android.widget.TextView
 import androidx.annotation.ColorInt
-import androidx.palette.graphics.Palette
 
 object EmojiScanner {
 
@@ -34,11 +31,12 @@ object EmojiScanner {
     }
 
     private fun parseColors(context: Context) {
+        val factory = EmojiBitmapFactory(context, EmojiBitmapFactory.EmojiScale.Small)
         val collections = EmojiRepo.getCollections()
 
         val x= collections.map { collection ->
              collection.name to collection.emojis.map {
-                    val emojiBitmap = context.getEmojiBitmap(it.emoticon)
+                    val emojiBitmap = factory.createBitmap(it.emoticon)
                     val dominantColor = emojiBitmap.getDominantColor()
                     emojiBitmap.recycle()
                     it.copy(colorValue = dominantColor)
@@ -57,16 +55,6 @@ object EmojiScanner {
         val color = newBitmap.getPixel(0, 0)
         newBitmap.recycle()
         return color
-    }
-
-    private fun Context.getEmojiBitmap(emoticon: String): Bitmap {
-        val emojiTextView = TextView(this).apply {
-            text = emoticon
-            textSize = 40f
-            setTextColor(Color.BLACK)
-        }
-        val bitmap = createBitmapFromView(emojiTextView, 52.dp, 52.dp)
-        return bitmap.trim()
     }
 
 }

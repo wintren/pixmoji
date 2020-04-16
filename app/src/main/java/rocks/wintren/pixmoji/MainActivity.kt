@@ -1,6 +1,5 @@
 package rocks.wintren.pixmoji
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -9,16 +8,23 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.View.MeasureSpec.EXACTLY
-import android.view.View.MeasureSpec.makeMeasureSpec
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.graphics.get
 import androidx.core.graphics.set
 import kotlinx.android.synthetic.main.activity_main.*
+import rocks.wintren.pixmoji.EmojiBitmapFactory.EmojiScale.*
 import kotlin.math.sqrt
 
+val colors = listOf(Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.WHITE, Color.BLACK)
+val emojis = mapOf(
+    Color.BLUE to "\uD83E\uDD76",
+    Color.RED to "\uD83D\uDC8B",
+    Color.GREEN to "\uD83E\uDD22",
+    Color.YELLOW to "\uD83E\uDD17",
+    Color.WHITE to "\uD83E\uDDB7",
+    Color.BLACK to "\uD83E\uDD8D"
+)
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,100 +34,137 @@ class MainActivity : AppCompatActivity() {
 
 //        quantifySonic()
         emojiSonic()
-//        val unicodeEmoji = 0x260E
-//        val emojiString = "\uD83D\uDC68\u200D\uD83D\uDC68\u200D\uD83D\uDC67\u200D\uD83D\uDC67"
-//        val emojiTextView = TextView(this).apply {
-//            text = emojiString
-//            textSize = 40f
-//            setTextColor(Color.BLACK)
-//            // Can't set background here because of trimming
+
+        // SUPER TODO !!!! in BuildBitmap
+        // TODO refactor with merge technique instead of moving pixels
+
+        // activity_main2
+//        val factory = EmojiBitmapFactory(this, Large)
+//
+//        bitmapEmojis.children.toList().forEach {
+//            if (it !is ImageView) return@forEach
+//            val bitmap = factory.createBitmap("↙")
+//            it.setImageBitmap(bitmap)
 //        }
-//        val emojiBitmap = createBitmapFromView(emojiTextView, 52.dp, 52.dp)
-//        val trimmed = emojiBitmap.trim()
 //
-//        val grid = trimmed.grid(100)
+//        bitmapEmojis.onLayout {
+//            bitmapEmojis.children.toList().forEach { view ->
+//                if (view !is ImageView) return@forEach
+//                log("view: ${view.width}x${view.height}")
+//                view.drawable.let {
+//                    log("drawable: ${it.intrinsicWidth}x${it.intrinsicHeight}")
+//                }
 //
-//        emojiImage.setImageBitmap(grid)
+//            }
+//        }
 
-
-//        EmojiScanner.run(this)
 
     }
 
-    fun String.emojiToBitmap(context: Context): Bitmap {
-        val emojiTextView = TextView(context).apply {
-            text = this@emojiToBitmap
-            textSize = 40f
-            setTextColor(Color.BLACK)
-            // Can't set background here because of trimming
+    override fun onResume() {
+        super.onResume()
+
+//        textEmojis.onLayout {
+//            val imageViews = bitmapEmojis.children.toList().map { it as? ImageView }.filterNotNull()
+//            textEmojis.children.forEachIndexed { index, view ->
+//                log("TextView size: ${view.width}x${view.height}")
+//                val textView = view as? TextView ?: return@forEachIndexed
+////                val emoticon = textView.text
+//                val bitmap = createBitmapFromView(textView, textView.width, textView.height)
+//                val imageView = imageViews[index]
+//                imageView.setImageBitmap(bitmap)
+//                log("Bitmap size: ${bitmap.width}x${bitmap.height}")
+//            }
+//        }
+    }
+
+    fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
+        if (width > 0 && height > 0) {
+            view.measure(
+                View.MeasureSpec.makeMeasureSpec(width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(height, View.MeasureSpec.EXACTLY)
+            )
         }
-        return createBitmapFromView(emojiTextView, 52.dp, 52.dp).trim()
-            .let { Bitmap.createScaledBitmap(it, 25, 25, false) }
+        view.layout(0, 0, view.measuredWidth, view.measuredHeight)
+
+        val bitmap = Bitmap.createBitmap(
+            view.measuredWidth,
+            view.measuredHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        val background = view.background
+
+        background?.draw(canvas)
+        view.draw(canvas)
+
+        return bitmap
     }
 
-    private fun quantifySonic() {
-        val quantifyColorImage = Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888)
-        val bitmap = setSonicReturnBitmap()
-
-
-        for (col in 0 until quantifyColorImage.width) {
-            for (row in 0 until quantifyColorImage.height) {
-                val pixel = bitmap.get(col, row)
-                val moxel = getClosestColor(pixel)
-                quantifyColorImage[col, row] = moxel
-            }
-        }
-
-        originalImage.setImageBitmap(quantifyColorImage)
-    }
 
     private fun emojiSonic() {
         val sonicBitmap = setSonicReturnBitmap()
-        val pixelMatrix: Array<Array<Int>> = Array(50) { Array(50) { 0 } }
+        val pixelColorMatrix: Array<Array<Int>> = Array(sonicBitmap.width) { Array(sonicBitmap.height) { 0 } }
 
         for (col in 0 until sonicBitmap.width) {
             for (row in 0 until sonicBitmap.height) {
-                pixelMatrix[col][row] = sonicBitmap[col, row]
+                pixelColorMatrix[col][row] = sonicBitmap[col, row]
             }
         }
 
-        val emojiMatrix = pixelMatrix.map { columns ->
+        val emojiMatrix = pixelColorMatrix
+            .map { columns ->
             columns.map { pixel ->
                 getClosestEmoji(pixel)
             }
         }
 
 
-        val result = buildBitmap(emojiMatrix)
+        val result = buildBitmap(emojiMatrix, Small)
         emojiImage.setImageBitmap(result)
     }
 
-    private fun buildBitmap(emojiMatrix: List<List<String>>): Bitmap {
-        log("emojiMatrix[${emojiMatrix.size}][${emojiMatrix.first().size}]")
-        val originalPixelsSide = emojiMatrix.size
-        val emojiPixelsSide = originalPixelsSide * 25
-        log("side*25=$emojiPixelsSide")
+    private fun buildBitmap(
+        emojiMatrix: List<List<String>>,
+        scale: EmojiBitmapFactory.EmojiScale
+    ): Bitmap {
+        val totalMemory = Runtime.getRuntime().totalMemory();
+        val freeMemory = Runtime.getRuntime().freeMemory();
 
+        log("total memory: $totalMemory")
+        log("free memory: $freeMemory")
+
+        val moxelSide = emojiMatrix.size
+        val singleEmojiSide = scale.pixelSide
+        val resultArtworkSide = moxelSide * singleEmojiSide
+        log("Moxel side = $moxelSide")
+        log("Single Emoji Side = $singleEmojiSide")
+        log("Result Artwork Side = $resultArtworkSide")
+
+        // We might be drawing and reading wrong x2 so it ends up correct, but it evens out :P
+
+        // SUPER TODO !!!!
         // TODO refactor with merge technique instead of moving pixels
 
-        return Bitmap.createBitmap(emojiPixelsSide, emojiPixelsSide, Bitmap.Config.ARGB_8888)
+        return Bitmap.createBitmap(resultArtworkSide, resultArtworkSide, Bitmap.Config.ARGB_8888)
             .also { result ->
-                for (col in 0 until originalPixelsSide) {
-                    for (row in 0 until originalPixelsSide) {
-                        log("col: $col")
-                        log("row: $row")
+                val emojiFactory = EmojiBitmapFactory(this, scale)
+                for (col in 0 until moxelSide) {
+                    for (row in 0 until moxelSide) {
+//                        log("col: $col")
+//                        log("row: $row")
 
                         val emoji = emojiMatrix[col][row]
                         log("Emoji: $emoji")
-                        val emojiBitmap = emoji.emojiToBitmap(this)
-                        log("emoji bitmap: [${emojiBitmap.width}][${emojiBitmap.height}]")
+                        val emojiBitmap = emojiFactory.createBitmap(emoji)
+//                        log("emoji bitmap: [${emojiBitmap.width}][${emojiBitmap.height}]")
 
-                        for (emojiCol in 0 until emojiBitmap.width - 1) {
-                                val x = col * 25 + emojiCol
-                                log("x: $x")
-                            for (emojiRow in 0 until emojiBitmap.height - 1) {
-                                val y = row * 25 + emojiRow
-                                log("y: $y")
+                        for (emojiCol in 0 until emojiBitmap.width) {
+                            val x = col * singleEmojiSide + emojiCol
+//                            log("x: $x")
+                            for (emojiRow in 0 until emojiBitmap.height) {
+                                val y = row * singleEmojiSide + emojiRow
+//                                log("y: $y")
                                 result[x, y] = emojiBitmap[emojiCol, emojiRow]
                             }
                         }
@@ -133,7 +176,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setSonicReturnBitmap(): Bitmap {
         // get input stream
-        val imageStream = assets.open("sonic.jpg")
+        val imageStream = assets.open("pikachu.jpg")
         // load image as Drawable
         val drawable = Drawable.createFromStream(imageStream, null)
         // set image to ImageView
@@ -189,16 +232,6 @@ fun getEmoji(unicode: Int): String {
     return String(Character.toChars(unicode))
 }
 
-val colors = listOf(Color.BLUE, Color.RED, Color.GREEN, Color.YELLOW, Color.WHITE, Color.BLACK)
-val emojis = mapOf(
-    Color.BLUE to "\uD83E\uDD76",
-    Color.RED to "\uD83D\uDC8B",
-    Color.GREEN to "\uD83E\uDD22",
-    Color.YELLOW to "\uD83E\uDD17",
-    Color.WHITE to "\uD83E\uDDB7",
-    Color.BLACK to "\uD83E\uDD8D"
-)
-
 fun getClosestColor(pixelColor: Int): Int {
     return colors
         .map { color -> color to colorDistance(pixelColor, color) }
@@ -230,106 +263,7 @@ fun colorDistance(colorInt1: Int, colorInt2: Int): Double {
     return sqrt((redValues + greenValues + blueValues).toDouble())
 }
 
-fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
-    if (width > 0 && height > 0) {
-        view.measure(makeMeasureSpec(width, EXACTLY), makeMeasureSpec(height, EXACTLY))
-    }
-    view.layout(0, 0, view.measuredWidth, view.measuredHeight)
 
-    val bitmap = Bitmap.createBitmap(
-        view.measuredWidth,
-        view.measuredHeight,
-        Bitmap.Config.ARGB_8888
-    )
-    val canvas = Canvas(bitmap)
-    val background = view.background
-
-    background?.draw(canvas)
-    view.draw(canvas)
-
-    return bitmap
-}
-
-
-fun Bitmap.trim(): Bitmap {
-    val bmp = this
-    val imgHeight = bmp.height
-    val imgWidth = bmp.width
-
-
-    //TRIM WIDTH - LEFT
-    var startWidth = 0
-    for (x in 0 until imgWidth) {
-        if (startWidth == 0) {
-            for (y in 0 until imgHeight) {
-                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                    startWidth = x
-                    break
-                }
-            }
-        } else
-            break
-    }
-
-
-    //TRIM WIDTH - RIGHT
-    var endWidth = 0
-    for (x in imgWidth - 1 downTo 0) {
-        if (endWidth == 0) {
-            for (y in 0 until imgHeight) {
-                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                    endWidth = x
-                    break
-                }
-            }
-        } else
-            break
-    }
-
-
-    //TRIM HEIGHT - TOP
-    var startHeight = 0
-    for (y in 0 until imgHeight) {
-        if (startHeight == 0) {
-            for (x in 0 until imgWidth) {
-                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                    startHeight = y
-                    break
-                }
-            }
-        } else
-            break
-    }
-
-
-    //TRIM HEIGHT - BOTTOM
-    var endHeight = 0
-    for (y in imgHeight - 1 downTo 0) {
-        if (endHeight == 0) {
-            for (x in 0 until imgWidth) {
-                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                    endHeight = y
-                    break
-                }
-            }
-        } else
-            break
-    }
-
-    // TODO, make square
-    // Find cut edges
-    // set background
-    // trim
-
-    return Bitmap.createBitmap(
-        bmp,
-        startWidth,
-        startHeight,
-        endWidth - startWidth,
-        endHeight - startHeight
-    )
-
-}
 
 
 
