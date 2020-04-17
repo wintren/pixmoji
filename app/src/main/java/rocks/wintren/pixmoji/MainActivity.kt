@@ -32,22 +32,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // acitivrty_main
-//        testImage.setImageDrawable(getDrawableFromAssets("link.jpg"))
-
+        // activity_main
 
         val file = "link.jpg"
         val emojiScale = EmojiBitmapFactory.EmojiScale.Tiny
         val imageScale = 6000
+        val original = getDrawableFromAssets(file)
+        originalImage.setImageDrawable(original)
+
+
         val drawable = getDrawableFromAssets(file)
-
-        originalImage.setImageDrawable(drawable.mutate())
-
         val originalBitmap = drawable.mutate().scaledBitmap(emojiScale, imageScale)
-        originalImage.setImageBitmap(originalBitmap)
+        log("Creating EmojiMatrix...")
         val emojiMatrix = originalBitmap.toEmojiMatrix()
-        val result = buildBitmap(emojiMatrix, emojiScale)
-        emojiImage.setImageBitmap(result)
+        log("Creating Emoji Art...")
+        val emojiArt = buildEmojiArt(emojiMatrix, emojiScale)
+        log("Done, Presenting Art!")
+        emojiImage.setImageBitmap(emojiArt)
 
 
         // SUPER TODO !!!! in BuildBitmap
@@ -156,7 +157,7 @@ class MainActivity : AppCompatActivity() {
 //        val emojiMatrix = emojiMatrix(sonicBitmap)
 
 
-//        val result = buildBitmap(emojiMatrix, Small)
+//        val result = buildEmojiArt(emojiMatrix, Small)
 
     }
 
@@ -173,7 +174,7 @@ class MainActivity : AppCompatActivity() {
         return pixelColorMatrix.map { columns -> columns.map { pixel -> getClosestEmoji(pixel) } }
     }
 
-    private fun buildBitmap(
+    private fun buildEmojiArt(
         emojiMatrix: List<List<String>>,
         scale: EmojiBitmapFactory.EmojiScale
     ): Bitmap {
@@ -192,11 +193,18 @@ class MainActivity : AppCompatActivity() {
 
         // SUPER TODO !!!!
         // TODO refactor with merge technique instead of moving pixels
+        // Move into factory
 
         return Bitmap.createBitmap(resultArtworkWidth, resultArtworkHeight, Bitmap.Config.ARGB_8888)
             .also { result ->
                 val emojiFactory = EmojiBitmapFactory(this, scale)
+                var currentProgress = 0
                 for (col in 0 until emojiColumns) {
+                    val percentDone = (col / emojiColumns.toFloat() * 100).toInt()
+                    if (percentDone != 100 && percentDone != currentProgress) {
+                        currentProgress = percentDone
+                        log("$currentProgress%")
+                    }
                     for (row in 0 until emojiRows) {
 
                         val emoji = emojiMatrix[col][row]
@@ -211,6 +219,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+                log("100%")
             }
     }
 
