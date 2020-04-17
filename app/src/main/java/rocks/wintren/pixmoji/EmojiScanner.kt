@@ -44,8 +44,8 @@ object EmojiScanner {
 
         }
         x.forEach { pair ->
-            log("------- Collection: ${pair.first}")
-            pair.second.forEach { log(it.toString()) }
+            d("------- Collection: ${pair.first}")
+            pair.second.forEach { d(it.toString()) }
         }
 
     }

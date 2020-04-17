@@ -1,15 +1,15 @@
 package rocks.wintren.pixmoji
 
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main2.*
-import kotlin.math.sqrt
+import rocks.wintren.pixmoji.EmojiBitmapFactory.CreateArtworkUpdate.InProgress
+import rocks.wintren.pixmoji.EmojiBitmapFactory.CreateArtworkUpdate.Success
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 //        measureEmojis()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun runEmojiArt(
         file: String,
         emojiScale: EmojiBitmapFactory.EmojiScale,
@@ -34,8 +35,25 @@ class MainActivity : AppCompatActivity() {
         originalImage.setImageDrawable(getDrawableFromAssets(file))
         val drawable = getDrawableFromAssets(file)
         val emojiFactory = EmojiBitmapFactory(this, emojiScale)
-        val artwork: Bitmap = emojiFactory.createArtwork(drawable, emojiScale, imageScale)
-        emojiImage.setImageBitmap(artwork)
+        emojiFactory.createArtwork(drawable, emojiScale, imageScale)
+            .observeOn(mainScheduler)
+            .subscribe { update ->
+                when (update) {
+                    is Success -> {
+                        progressLabel.visibility = View.GONE
+                        progressLabel.text = null
+                        loadingSpinner.visibility = View.GONE
+                        emojiImage.setImageBitmap(update.artwork)
+                    }
+                    is InProgress -> {
+                        progressLabel.visibility = View.VISIBLE
+                        loadingSpinner.visibility = View.VISIBLE
+                        progressLabel.text = "${update.percentage}%"
+                    }
+                }
+
+            }
+
     }
 
     private fun measureEmojis() {

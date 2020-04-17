@@ -10,9 +10,10 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.IntRange
 import androidx.core.graphics.drawable.toBitmap
-import androidx.core.graphics.get
-import androidx.core.graphics.set
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import kotlin.math.max
 
 class EmojiBitmapFactory(
@@ -25,8 +26,14 @@ class EmojiBitmapFactory(
         return emojiTextView.toBitmap()
     }
 
-    sealed class ArtworkLoad {
-        // todo
+    sealed class CreateArtworkUpdate {
+        data class Success(val artwork: Bitmap) : CreateArtworkUpdate()
+        data class InProgress(
+            @IntRange(
+                from = 0,
+                to = 100
+            ) val percentage: Int
+        ) : CreateArtworkUpdate()
     }
 
     // SUPER TODO !!!! in BuildBitmap
@@ -36,14 +43,16 @@ class EmojiBitmapFactory(
         drawable: Drawable,
         emojiScale: EmojiScale,
         imageScale: Int
-    ): Bitmap {
-        val originalBitmap = drawable.scaledBitmap(emojiScale, imageScale)
-        d("Creating Emoji Matrix...")
-        val emojiMatrix = originalBitmap.toEmojiMatrix()
-        i("Creating Emoji Art...")
-        val emojiArt = buildEmojiArt(emojiMatrix, emojiScale)
-        i("Done, Presenting Art!")
-        return emojiArt
+    ): Observable<CreateArtworkUpdate> {
+        return Observable.create<CreateArtworkUpdate> { emitter ->
+            emitter.onNext(CreateArtworkUpdate.InProgress(0))
+            val originalBitmap = drawable.scaledBitmap(emojiScale, imageScale)
+            val emojiMatrix = originalBitmap.toEmojiMatrix()
+            val emojiArt = emojiMatrix.toBitmap(emojiScale) {
+                emitter.onNext(CreateArtworkUpdate.InProgress(it))
+            }
+            emitter.onNext(CreateArtworkUpdate.Success(emojiArt))
+        }.subscribeOn(Schedulers.computation())
     }
 
     private fun Drawable.scaledBitmap(
@@ -77,20 +86,20 @@ class EmojiBitmapFactory(
 
         for (col in 0 until width) {
             for (row in 0 until height) {
-                pixelColorMatrix[col][row] = this[col, row]
+                pixelColorMatrix[col][row] = this.getPixel(col, row)
             }
         }
 
         return pixelColorMatrix.map { columns -> columns.map { pixel -> getClosestEmoji(pixel) } }
     }
 
-    private fun buildEmojiArt(
-        emojiMatrix: List<List<String>>,
-        scale: EmojiBitmapFactory.EmojiScale
+    private fun List<List<String>>.toBitmap(
+        scale: EmojiScale,
+        progressCallback: (percentDone: Int) -> Unit
     ): Bitmap {
 
-        val emojiColumns = emojiMatrix.size
-        val emojiRows = emojiMatrix.first().size
+        val emojiColumns = size
+        val emojiRows = first().size
         val singleEmojiSide = scale.moxelSize
         val resultArtworkWidth = emojiColumns * singleEmojiSide
         val resultArtworkHeight = emojiRows * singleEmojiSide
@@ -99,43 +108,39 @@ class EmojiBitmapFactory(
         i("Original Image: ${emojiColumns}x${emojiRows}")
         i("Result Artwork Side: ${resultArtworkWidth}x${resultArtworkHeight}")
 
-        // We might be drawing and reading wrong x2 so it ends up correct, but it evens out :P
-
         // SUPER TODO !!!!
         // TODO refactor with merge technique instead of moving pixels
-        // Move into factory
 
         return Bitmap.createBitmap(resultArtworkWidth, resultArtworkHeight, Bitmap.Config.ARGB_8888)
             .also { result ->
-//                val emojiFactory = EmojiBitmapFactory(this, scale)
                 var currentProgress = 0
                 for (col in 0 until emojiColumns) {
                     val percentDone = (col / emojiColumns.toFloat() * 100).toInt()
                     if (percentDone != 100 && percentDone != currentProgress) {
                         currentProgress = percentDone
-                        i("$currentProgress%")
+                        progressCallback.invoke(percentDone)
                     }
                     for (row in 0 until emojiRows) {
 
-                        val emoji = emojiMatrix[col][row]
-//                        log("Emoji: $emoji")
+                        val emoji = this[col][row]
                         val emojiBitmap = createEmoji(emoji)
                         for (emojiCol in 0 until emojiBitmap.width) {
                             val x = col * singleEmojiSide + emojiCol
                             for (emojiRow in 0 until emojiBitmap.height) {
                                 val y = row * singleEmojiSide + emojiRow
-                                result[x, y] = emojiBitmap[emojiCol, emojiRow]
+                                val pixel = emojiBitmap.getPixel(emojiCol, emojiRow)
+                                result.setPixel(x, y, pixel)
                             }
                         }
                     }
                 }
-                i("100%")
+                progressCallback.invoke(100)
             }
     }
 
     private fun createEmojiTextView(emoji: String): TextView {
         return TextView(context).apply {
-                val sideLength = scale.moxelSize
+            val sideLength = scale.moxelSize
             layoutParams = ViewGroup.LayoutParams(sideLength, sideLength)
             gravity = Gravity.CENTER
             text = emoji
@@ -149,10 +154,10 @@ class EmojiBitmapFactory(
     private fun TextView.toBitmap(): Bitmap {
         val view = this
         val sideLength = scale.moxelSize
-            view.measure(
-                View.MeasureSpec.makeMeasureSpec(sideLength, View.MeasureSpec.EXACTLY),
-                View.MeasureSpec.makeMeasureSpec(sideLength, View.MeasureSpec.EXACTLY)
-            )
+        view.measure(
+            View.MeasureSpec.makeMeasureSpec(sideLength, View.MeasureSpec.EXACTLY),
+            View.MeasureSpec.makeMeasureSpec(sideLength, View.MeasureSpec.EXACTLY)
+        )
         view.layout(0, 0, sideLength, sideLength)
 
         val bitmap = Bitmap.createBitmap(

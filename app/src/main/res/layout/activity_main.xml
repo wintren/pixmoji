@@ -9,25 +9,15 @@
     android:weightSum="3"
     tools:context=".MainActivity">
 
-    <FrameLayout
+
+    <ImageView
+        android:id="@+id/originalImage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        android:layout_weight="1">
-
-        <ImageView
-            android:id="@+id/originalImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerInside" />
-
-        <ProgressBar
-            android:id="@+id/loadingSpinner"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center"
-            />
-    </FrameLayout>
+        android:layout_weight="1"
+        android:scaleType="centerInside" />
+    
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -59,6 +49,21 @@
             android:layout_gravity="center|bottom"
             android:layout_marginBottom="2dp"
             android:text="^ Zoom in and scroll around... ^" />
+
+
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/progressLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:translationY="42dp"
+            tools:text="Progress..." />
     </FrameLayout>
 
 </LinearLayout>
