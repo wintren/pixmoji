@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View
+import androidx.annotation.ColorInt
 import kotlin.math.sqrt
 
 
@@ -93,6 +94,14 @@ fun Context.getDrawableFromAssets(fileName: String): Drawable {
     return Drawable.createFromStream(imageStream, null).also {
         imageStream.close()
     }
+}
+
+@ColorInt
+fun adjustAlpha(@ColorInt color: Int, alpha: Int): Int {
+    val red = Color.red(color)
+    val green = Color.green(color)
+    val blue = Color.blue(color)
+    return Color.argb(alpha, red, green, blue)
 }
 
 fun getClosestColor(pixelColor: Int): Int {

@@ -23,6 +23,10 @@ class MainActivity : AppCompatActivity() {
 
         runEmojiArt(file, emojiScale, imageScale)
 
+        // ** TODO
+        // - Replace pixel-shift with drawing bitmaps on larger bitmap
+        // - Work on moving more emojis into the app
+
 //        measureEmojis()
     }
 

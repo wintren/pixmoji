@@ -14,6 +14,8 @@ import androidx.annotation.IntRange
 import androidx.core.graphics.drawable.toBitmap
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.max
 
 class EmojiBitmapFactory(
@@ -39,18 +41,32 @@ class EmojiBitmapFactory(
     // SUPER TODO !!!! in BuildBitmap
     // TODO refactor with merge technique instead of moving pixels
 
+    /**
+     * BENCHMARK
+     * Link.jpg, 1500x1500, Tiny, max 6000x6000. Took 01:00:178 with pixel-shifting
+     * Link.jpg, 1500x1500, Tiny, max 6000x6000. Took 01:01:730 with pixel-shifting (pale color fix)
+     */
+
     fun createArtwork(
         drawable: Drawable,
         emojiScale: EmojiScale,
         imageScale: Int
     ): Observable<CreateArtworkUpdate> {
         return Observable.create<CreateArtworkUpdate> { emitter ->
+            val timeBefore = System.currentTimeMillis()
             emitter.onNext(CreateArtworkUpdate.InProgress(0))
+
             val originalBitmap = drawable.scaledBitmap(emojiScale, imageScale)
             val emojiMatrix = originalBitmap.toEmojiMatrix()
             val emojiArt = emojiMatrix.toBitmap(emojiScale) {
                 emitter.onNext(CreateArtworkUpdate.InProgress(it))
             }
+
+            val timeAfter = System.currentTimeMillis()
+            val duration = timeAfter - timeBefore
+            val time = SimpleDateFormat("mm:ss:SSS").format(Date(duration))
+            w("conversion took, $time")
+
             emitter.onNext(CreateArtworkUpdate.Success(emojiArt))
         }.subscribeOn(Schedulers.computation())
     }
@@ -147,7 +163,10 @@ class EmojiBitmapFactory(
             setTextSize(TypedValue.COMPLEX_UNIT_SP, scale.textSize)
             includeFontPadding = false
             setTextColor(Color.BLACK)
-            // Can't set background here because of trimming
+
+            // Basic and hacky way to get background color, works though
+            val emojiColor = emojis.filterValues { it == emoji }.keys.first()
+            setBackgroundColor(adjustAlpha(emojiColor, 100))
         }
     }
 
