@@ -9,15 +9,25 @@
     android:weightSum="3"
     tools:context=".MainActivity">
 
-
-    <ImageView
-        android:id="@+id/originalImage"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_centerHorizontal="true"
         android:layout_margin="16dp"
-        android:layout_weight="1"
-        android:scaleType="centerInside" />
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/originalImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerInside" />
+
+        <ProgressBar
+            android:id="@+id/loadingSpinner"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            />
+    </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

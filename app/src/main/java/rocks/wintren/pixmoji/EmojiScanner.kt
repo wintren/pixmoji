@@ -36,7 +36,7 @@ object EmojiScanner {
 
         val x= collections.map { collection ->
              collection.name to collection.emojis.map {
-                    val emojiBitmap = factory.createBitmap(it.emoticon)
+                    val emojiBitmap = factory.createEmoji(it.emoticon)
                     val dominantColor = emojiBitmap.getDominantColor()
                     emojiBitmap.recycle()
                     it.copy(colorValue = dominantColor)
