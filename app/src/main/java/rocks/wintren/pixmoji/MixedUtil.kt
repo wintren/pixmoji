@@ -21,39 +21,6 @@ val emojis = mapOf(
     Color.BLACK to "\uD83E\uDD8D"
 )
 
-fun mergeBitmap(fr: Bitmap, sc: Bitmap): Bitmap {
-
-    val comboBitmap: Bitmap
-
-    val width: Int = fr.width + sc.width
-    val height: Int = fr.height
-
-    comboBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-
-    val comboImage = Canvas(comboBitmap)
-
-
-    comboImage.drawBitmap(fr, 0f, 0f, null)
-    comboImage.drawBitmap(sc, fr.width.toFloat(), 0f, null)
-    return comboBitmap
-
-}
-
-fun Bitmap.grid(n: Int): Bitmap {
-    return Bitmap.createBitmap(width * n, height * n, Bitmap.Config.ARGB_8888)
-        .also { result ->
-            val canvas = Canvas(result)
-            for (col in 0 until n) {
-                for (row in 0 until n) {
-                    val left = col * width
-                    val top = row * height
-                    canvas.drawBitmap(this, left.toFloat(), top.toFloat(), null)
-                }
-            }
-        }
-}
-
-
 fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
     if (width > 0 && height > 0) {
         view.measure(
@@ -75,6 +42,83 @@ fun createBitmapFromView(view: View, width: Int, height: Int): Bitmap {
     view.draw(canvas)
 
     return bitmap
+}
+
+
+private fun Bitmap.trimSize(): Bitmap {
+    val bmp = this
+    val imgHeight = bmp.height
+    val imgWidth = bmp.width
+
+
+    //TRIM WIDTH - LEFT
+    var startWidth = 0
+    for (x in 0 until imgWidth) {
+        if (startWidth == 0) {
+            for (y in 0 until imgHeight) {
+                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                    startWidth = x
+                    break
+                }
+            }
+        } else
+            break
+    }
+
+
+    //TRIM WIDTH - RIGHT
+    var endWidth = 0
+    for (x in imgWidth - 1 downTo 0) {
+        if (endWidth == 0) {
+            for (y in 0 until imgHeight) {
+                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                    endWidth = x
+                    break
+                }
+            }
+        } else
+            break
+    }
+
+
+    //TRIM HEIGHT - TOP
+    var startHeight = 0
+    for (y in 0 until imgHeight) {
+        if (startHeight == 0) {
+            for (x in 0 until imgWidth) {
+                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                    startHeight = y
+                    break
+                }
+            }
+        } else
+            break
+    }
+
+
+    //TRIM HEIGHT - BOTTOM
+    var endHeight = 0
+    for (y in imgHeight - 1 downTo 0) {
+        if (endHeight == 0) {
+            for (x in 0 until imgWidth) {
+                if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
+                    endHeight = y
+                    break
+                }
+            }
+        } else
+            break
+    }
+
+    return Bitmap.createBitmap(
+        bmp,
+        startWidth,
+        startHeight,
+        endWidth - startWidth,
+        endHeight - startHeight
+    )   // TODO
+        .let { Bitmap.createScaledBitmap(it, 25, 25, false) }
+
 }
 
 val Int.dp: Int

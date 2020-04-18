@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.IntRange
+import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.drawable.toBitmap
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
@@ -45,6 +46,8 @@ class EmojiBitmapFactory(
      * BENCHMARK
      * Link.jpg, 1500x1500, Tiny, max 6000x6000. Took 01:00:178 with pixel-shifting
      * Link.jpg, 1500x1500, Tiny, max 6000x6000. Took 01:01:730 with pixel-shifting (pale color fix)
+     * Link.jpg, 1500x1500, Tiny, max 6000x6000. Took 00:29:269 with pixel-shifting
+     * Link.jpg, 1500x1500, Tiny, max 6000x6000. Took 00:35:059 with pixel-shifting (pale color fix)
      */
 
     fun createArtwork(
@@ -93,7 +96,6 @@ class EmojiBitmapFactory(
         }
         i("Scaled Bitmap: ${width}x${height}")
         return this.toBitmap(width, height)
-
     }
 
     private fun Bitmap.toEmojiMatrix(): List<List<String>> {
@@ -113,9 +115,9 @@ class EmojiBitmapFactory(
         scale: EmojiScale,
         progressCallback: (percentDone: Int) -> Unit
     ): Bitmap {
-
-        val emojiColumns = size
-        val emojiRows = first().size
+        val emojiMatrix = this
+        val emojiColumns = emojiMatrix.size
+        val emojiRows = emojiMatrix.first().size
         val singleEmojiSide = scale.moxelSize
         val resultArtworkWidth = emojiColumns * singleEmojiSide
         val resultArtworkHeight = emojiRows * singleEmojiSide
@@ -128,7 +130,7 @@ class EmojiBitmapFactory(
         // TODO refactor with merge technique instead of moving pixels
 
         return Bitmap.createBitmap(resultArtworkWidth, resultArtworkHeight, Bitmap.Config.ARGB_8888)
-            .also { result ->
+            .applyCanvas {
                 var currentProgress = 0
                 for (col in 0 until emojiColumns) {
                     val percentDone = (col / emojiColumns.toFloat() * 100).toInt()
@@ -137,22 +139,17 @@ class EmojiBitmapFactory(
                         progressCallback.invoke(percentDone)
                     }
                     for (row in 0 until emojiRows) {
-
-                        val emoji = this[col][row]
+                        val emoji = emojiMatrix[col][row]
                         val emojiBitmap = createEmoji(emoji)
-                        for (emojiCol in 0 until emojiBitmap.width) {
-                            val x = col * singleEmojiSide + emojiCol
-                            for (emojiRow in 0 until emojiBitmap.height) {
-                                val y = row * singleEmojiSide + emojiRow
-                                val pixel = emojiBitmap.getPixel(emojiCol, emojiRow)
-                                result.setPixel(x, y, pixel)
-                            }
-                        }
+                        val x = col * singleEmojiSide + row
+                        val y = row * singleEmojiSide + col
+                        drawBitmap(emojiBitmap, x.toFloat(), y.toFloat(), null)
                     }
                 }
                 progressCallback.invoke(100)
             }
     }
+
 
     private fun createEmojiTextView(emoji: String): TextView {
         return TextView(context).apply {
@@ -165,8 +162,8 @@ class EmojiBitmapFactory(
             setTextColor(Color.BLACK)
 
             // Basic and hacky way to get background color, works though
-            val emojiColor = emojis.filterValues { it == emoji }.keys.first()
-            setBackgroundColor(adjustAlpha(emojiColor, 100))
+//            val emojiColor = emojis.filterValues { it == emoji }.keys.first()
+//            setBackgroundColor(adjustAlpha(emojiColor, 100))
         }
     }
 
@@ -192,89 +189,6 @@ class EmojiBitmapFactory(
 
         return bitmap
     }
-
-
-    private fun Bitmap.trimSize(): Bitmap {
-        val bmp = this
-        val imgHeight = bmp.height
-        val imgWidth = bmp.width
-
-
-        //TRIM WIDTH - LEFT
-        var startWidth = 0
-        for (x in 0 until imgWidth) {
-            if (startWidth == 0) {
-                for (y in 0 until imgHeight) {
-                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                        startWidth = x
-                        break
-                    }
-                }
-            } else
-                break
-        }
-
-
-        //TRIM WIDTH - RIGHT
-        var endWidth = 0
-        for (x in imgWidth - 1 downTo 0) {
-            if (endWidth == 0) {
-                for (y in 0 until imgHeight) {
-                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                        endWidth = x
-                        break
-                    }
-                }
-            } else
-                break
-        }
-
-
-        //TRIM HEIGHT - TOP
-        var startHeight = 0
-        for (y in 0 until imgHeight) {
-            if (startHeight == 0) {
-                for (x in 0 until imgWidth) {
-                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                        startHeight = y
-                        break
-                    }
-                }
-            } else
-                break
-        }
-
-
-        //TRIM HEIGHT - BOTTOM
-        var endHeight = 0
-        for (y in imgHeight - 1 downTo 0) {
-            if (endHeight == 0) {
-                for (x in 0 until imgWidth) {
-                    if (bmp.getPixel(x, y) != Color.TRANSPARENT) {
-                        endHeight = y
-                        break
-                    }
-                }
-            } else
-                break
-        }
-
-        // TODO, make square
-        // Find cut edges
-        // set background
-        // trimSize
-
-        return Bitmap.createBitmap(
-            bmp,
-            startWidth,
-            startHeight,
-            endWidth - startWidth,
-            endHeight - startHeight
-        )   // TODO
-            .let { Bitmap.createScaledBitmap(it, 25, 25, false) }
-
-    }
-
 
     enum class EmojiScale(
         /**

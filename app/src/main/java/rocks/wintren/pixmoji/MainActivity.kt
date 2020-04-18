@@ -19,15 +19,11 @@ class MainActivity : AppCompatActivity() {
 
         val file = "link.jpg"
         val emojiScale = EmojiBitmapFactory.EmojiScale.Tiny
-        val imageScale = 6000
+        val imageScale = 6_000
+        // 10_000 | 01:12:061
+        // 20_000 | 05:01:198 Looks really ugly, emojis start re-appearing
 
         runEmojiArt(file, emojiScale, imageScale)
-
-        // ** TODO
-        // - Replace pixel-shift with drawing bitmaps on larger bitmap
-        // - Work on moving more emojis into the app
-
-//        measureEmojis()
     }
 
     @SuppressLint("SetTextI18n")
