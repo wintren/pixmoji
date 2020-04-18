@@ -156,12 +156,15 @@ fun getClosestColor(pixelColor: Int): Int {
         .first()
 }
 
+const val TRANSPARENT = ".transparent"
+
 fun getClosestEmoji(pixelColor: Int): String {
     return colors
         .map { color -> color to colorDistance(pixelColor, color) }
         .sortedBy { it.second }
         .map { it.first }
-        .first().let { emojis.getValue(it) }
+        .first()
+        .let { emojis.getValue(it) }
 }
 
 fun colorDistance(colorInt1: Int, colorInt2: Int): Double {

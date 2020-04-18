@@ -97,8 +97,9 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
     }
 
     private fun Bitmap.toEmojiMatrix(): List<List<String>> {
+        setHasAlpha(true)
         val pixelColorMatrix: Array<Array<Int>> =
-            Array(width) { Array(height) { 0 } }
+            Array(width) { Array(height) { Color.TRANSPARENT } }
 
         for (col in 0 until width) {
             for (row in 0 until height) {
@@ -106,7 +107,11 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
             }
         }
 
-        return pixelColorMatrix.map { columns -> columns.map { pixel -> getClosestEmoji(pixel) } }
+        return pixelColorMatrix.map { columns ->
+            columns.map { pixel ->
+                if (pixel != Color.TRANSPARENT) getClosestEmoji(pixel) else TRANSPARENT
+            }
+        }
     }
 
     private fun List<List<String>>.toBitmap(
@@ -138,10 +143,12 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
                     }
                     for (row in 0 until emojiRows) {
                         val emoji = emojiMatrix[col][row]
-                        val emojiBitmap = createEmoji(emoji)
-                        val x = col * singleEmojiSide
-                        val y = row * singleEmojiSide
-                        drawBitmap(emojiBitmap, x.toFloat(), y.toFloat(), null)
+                        if (emoji != TRANSPARENT) {
+                            val emojiBitmap = createEmoji(emoji)
+                            val x = col * singleEmojiSide
+                            val y = row * singleEmojiSide
+                            drawBitmap(emojiBitmap, x.toFloat(), y.toFloat(), null)
+                        }
                     }
                 }
                 progressCallback.invoke(100)
@@ -203,7 +210,13 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
         Small(10f, 32),
         Medium(12f, 40),
         Large(16f, 52),
-        Huge(24f, 76)
+        Huge(24f, 76);
+
+        fun next(): EmojiScale {
+            val values = values()
+            val index = values.indexOf(this)
+            return values[(index + 1) % values.size]
+        }
     }
 
 }

@@ -19,6 +19,11 @@ fun ImageView.bindingSetDrawable(drawable: Drawable?) {
     setImageDrawable(drawable)
 }
 
+@BindingAdapter("enabled")
+fun View.bindingSetEnabled(enabled: Boolean?) {
+    isEnabled = enabled ?: return
+}
+
 @BindingAdapter("visibleElseGone")
 fun View.bindingVisibleElseGone(visible: Boolean?) {
     this.visibility = if (visible == true) VISIBLE else GONE

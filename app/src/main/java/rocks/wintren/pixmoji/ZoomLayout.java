@@ -142,6 +142,15 @@ public class ZoomLayout extends FrameLayout implements ScaleGestureDetector.OnSc
         Log.i(TAG, "onScaleEnd");
     }
 
+    public void resetZoom() {
+        scale = 1.0f;
+        dx = 0;
+        dy = 0;
+        prevDx = 0;
+        prevDy = 0;
+        applyScaleAndTranslation();
+    }
+
     private void applyScaleAndTranslation() {
         child().setScaleX(scale);
         child().setScaleY(scale);
