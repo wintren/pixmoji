@@ -1,69 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false"
-    android:orientation="vertical"
-    android:weightSum="3"
-    tools:context=".MainActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <ImageView
-        android:id="@+id/originalImage"
+        <variable
+            name="viewModel"
+            type="rocks.wintren.pixmoji.MainViewModel" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:layout_weight="1"
-        android:scaleType="centerInside" />
-    
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:weightSum="3"
+        tools:context=".MainActivity">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="8dp"
-        android:layout_weight="2"
-        android:background="@drawable/outline"
-        android:clipChildren="true"
-        android:padding="4dp">
-
-        <rocks.wintren.pixmoji.ZoomLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="24dp"
-            android:background="#fff">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
             <ImageView
-                android:id="@+id/emojiImage"
+                android:id="@+id/originalImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="16dp"
+                android:scaleType="centerInside"
+                app:drawable="@{viewModel.originalImage}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/actions"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/actions"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/originalImage"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="@{() -> viewModel.onPickImageClick()}"
+                    android:text="Pick Image" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="@{() -> viewModel.onCreateArtClick()}"
+                    android:text="Create Emoji Art" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:onClick="@{() -> viewModel.onSaveClick()}"
+                    android:text="Save Bitmap" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:layout_weight="2"
+            android:background="@drawable/outline"
+            android:clipChildren="true"
+            android:padding="4dp">
+
+            <rocks.wintren.pixmoji.ZoomLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="24dp"
+                android:background="#fff">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:background="#fff"
+                    app:bitmap="@{viewModel.emojiArtwork}" />
+
+            </rocks.wintren.pixmoji.ZoomLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|bottom"
+                android:layout_marginBottom="2dp"
+                android:text="^ Zoom in and scroll around... ^" />
+
+
+            <ProgressBar
+                android:layout_width="64dp"
+                android:layout_height="64dp"
                 android:layout_gravity="center"
-                android:background="#fff" />
+                app:visibleElseGone="@{viewModel.showLoading}" />
 
-        </rocks.wintren.pixmoji.ZoomLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@{viewModel.loadingLabel}"
+                android:translationY="42dp"
+                app:visibleElseGone="@{viewModel.showLoading}"
+                tools:text="Progress..." />
+        </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|bottom"
-            android:layout_marginBottom="2dp"
-            android:text="^ Zoom in and scroll around... ^" />
-
-
-        <ProgressBar
-            android:id="@+id/loadingSpinner"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center" />
-
-        <TextView
-            android:id="@+id/progressLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:translationY="42dp"
-            tools:text="Progress..." />
-    </FrameLayout>
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

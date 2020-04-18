@@ -1,5 +1,6 @@
 package rocks.wintren.pixmoji
 
+import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -19,10 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.max
 
-class EmojiBitmapFactory(
-    private val context: Context,
-    private val scale: EmojiScale
-) {
+class EmojiBitmapFactory(private val scale: EmojiScale) {
 
     fun createEmoji(emoji: String): Bitmap {
         val emojiTextView = createEmojiTextView(emoji)
@@ -141,8 +139,8 @@ class EmojiBitmapFactory(
                     for (row in 0 until emojiRows) {
                         val emoji = emojiMatrix[col][row]
                         val emojiBitmap = createEmoji(emoji)
-                        val x = col * singleEmojiSide + row
-                        val y = row * singleEmojiSide + col
+                        val x = col * singleEmojiSide
+                        val y = row * singleEmojiSide
                         drawBitmap(emojiBitmap, x.toFloat(), y.toFloat(), null)
                     }
                 }
@@ -152,7 +150,7 @@ class EmojiBitmapFactory(
 
 
     private fun createEmojiTextView(emoji: String): TextView {
-        return TextView(context).apply {
+        return TextView(PixMojiApp.appContext).apply {
             val sideLength = scale.moxelSize
             layoutParams = ViewGroup.LayoutParams(sideLength, sideLength)
             gravity = Gravity.CENTER

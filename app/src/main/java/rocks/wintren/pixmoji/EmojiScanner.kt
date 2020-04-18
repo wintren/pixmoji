@@ -8,14 +8,15 @@ object EmojiScanner {
 
     fun run(context: Context) {
         readEmojis(context)
-        parseColors(context)
+        parseColors()
     }
 
     private fun readEmojis(context: Context) {
 
         val fileNames = EmojiRepo.getFileNames()
         for (filename in fileNames) {
-            val stream = context.assets.open(filename)
+            val stream = PixMojiApp.appContext.assets.open(filename)
+//            val stream = context.assets.open(filename)
             val lines = stream.bufferedReader().readLines()
             val emojis = lines.map {
                 val split = it.split(' ')
@@ -30,8 +31,8 @@ object EmojiScanner {
         }
     }
 
-    private fun parseColors(context: Context) {
-        val factory = EmojiBitmapFactory(context, EmojiBitmapFactory.EmojiScale.Small)
+    private fun parseColors() {
+        val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Small)
         val collections = EmojiRepo.getCollections()
 
         val x= collections.map { collection ->

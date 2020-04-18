@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -27,6 +26,9 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -42,6 +44,18 @@ dependencies {
 
     implementation "io.reactivex.rxjava3:rxjava:3.0.2"
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+    kapt 'com.android.databinding:compiler:3.1.4'
+
+    //
+    def lifecycle_version = "2.2.0"
+    def arch_version = "2.1.0"
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    //
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'

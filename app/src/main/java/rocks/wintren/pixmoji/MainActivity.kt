@@ -1,63 +1,33 @@
 package rocks.wintren.pixmoji
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main2.*
-import rocks.wintren.pixmoji.EmojiBitmapFactory.CreateArtworkUpdate.InProgress
-import rocks.wintren.pixmoji.EmojiBitmapFactory.CreateArtworkUpdate.Success
+import rocks.wintren.pixmoji.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        val file = "link.jpg"
-        val emojiScale = EmojiBitmapFactory.EmojiScale.Tiny
-        val imageScale = 6_000
-        // 10_000 | 01:12:061
-        // 20_000 | 05:01:198 Looks really ugly, emojis start re-appearing
-
-        runEmojiArt(file, emojiScale, imageScale)
+        setupViewModel()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun runEmojiArt(
-        file: String,
-        emojiScale: EmojiBitmapFactory.EmojiScale,
-        imageScale: Int
-    ) {
-        originalImage.setImageDrawable(getDrawableFromAssets(file))
-        val drawable = getDrawableFromAssets(file)
-        val emojiFactory = EmojiBitmapFactory(this, emojiScale)
-        emojiFactory.createArtwork(drawable, emojiScale, imageScale)
-            .observeOn(mainScheduler)
-            .subscribe { update ->
-                when (update) {
-                    is Success -> {
-                        progressLabel.visibility = View.GONE
-                        progressLabel.text = null
-                        loadingSpinner.visibility = View.GONE
-                        emojiImage.setImageBitmap(update.artwork)
-                    }
-                    is InProgress -> {
-                        progressLabel.visibility = View.VISIBLE
-                        loadingSpinner.visibility = View.VISIBLE
-                        progressLabel.text = "${update.percentage}%"
-                    }
-                }
-
-            }
-
+    private fun setupViewModel() {
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val binding: ActivityMainBinding =
+            DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
     }
 
     private fun measureEmojis() {
-        val factory = EmojiBitmapFactory(this, EmojiBitmapFactory.EmojiScale.Large)
+        val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Large)
 
         bitmapEmojis.children.toList().forEach {
             if (it !is ImageView) return@forEach

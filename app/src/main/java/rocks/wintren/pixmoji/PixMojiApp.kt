@@ -10,6 +10,7 @@ class PixMojiApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        appContext = this
 
 //        val config = BundledEmojiCompatConfig(this)
 //        EmojiCompat.init(config)
@@ -25,4 +26,9 @@ class PixMojiApp : Application() {
 
     }
 
+
+    companion object {
+    lateinit var appContext: Application
+
+    }
 }
