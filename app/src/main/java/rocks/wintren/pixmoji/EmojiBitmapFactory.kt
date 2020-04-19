@@ -1,11 +1,8 @@
 package rocks.wintren.pixmoji
 
-import android.app.Application
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -13,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.IntRange
 import androidx.core.graphics.applyCanvas
-import androidx.core.graphics.drawable.toBitmap
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.text.SimpleDateFormat
@@ -49,7 +45,7 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
      */
 
     fun createArtwork(
-        drawable: Drawable,
+        originalBitmap: Bitmap,
         emojiScale: EmojiScale,
         imageScale: Int
     ): Observable<CreateArtworkUpdate> {
@@ -57,8 +53,8 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
             val timeBefore = System.currentTimeMillis()
             emitter.onNext(CreateArtworkUpdate.InProgress(0))
 
-            val originalBitmap = drawable.scaledBitmap(emojiScale, imageScale)
-            val emojiMatrix = originalBitmap.toEmojiMatrix()
+            val scaledOriginalBitmap = originalBitmap.scaledBitmap(emojiScale, imageScale)
+            val emojiMatrix = scaledOriginalBitmap.toEmojiMatrix()
             val emojiArt = emojiMatrix.toBitmap(emojiScale) {
                 emitter.onNext(CreateArtworkUpdate.InProgress(it))
             }
@@ -72,28 +68,26 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
         }.subscribeOn(Schedulers.computation())
     }
 
-    private fun Drawable.scaledBitmap(
-        scale: EmojiScale,
-        imageScale: Int
-    ): Bitmap {
+    private fun Bitmap.scaledBitmap(scale: EmojiScale, imageScale: Int): Bitmap {
+        val predictedWidth = width * scale.moxelSize
+        val predictedHeight = height * scale.moxelSize
 
-        val predictedWidth = intrinsicWidth * scale.moxelSize
-        val predictedHeight = intrinsicHeight * scale.moxelSize
-
-        i("Original: ${intrinsicWidth}x${intrinsicHeight}")
+        i("Original: ${width}x${height}")
         i("Predicted: ${predictedWidth}x${predictedHeight}")
 
-        val (width: Int, height: Int) = if (predictedWidth > imageScale || predictedHeight > imageScale) {
+        return if (predictedWidth > imageScale || predictedHeight > imageScale) {
             val longestPredictedSide = max(predictedHeight, predictedWidth)
             val downScaleFactor: Float = imageScale / longestPredictedSide.toFloat()
-            val scaledWidth = intrinsicWidth * downScaleFactor
-            val scaledHeight = intrinsicHeight * downScaleFactor
-            scaledWidth.toInt() to scaledHeight.toInt()
+            val scaledWidth = (width * downScaleFactor).toInt()
+            val scaledHeight = (height * downScaleFactor).toInt()
+
+            val scaledBitmap = Bitmap.createScaledBitmap(this, scaledWidth, scaledHeight, false)!!
+            i("Scaled Bitmap: ${scaledBitmap.height}x${scaledBitmap.height}")
+            scaledBitmap
         } else {
-            intrinsicWidth to intrinsicHeight
+            i("No scale applied: ${width}x${height}")
+            this
         }
-        i("Scaled Bitmap: ${width}x${height}")
-        return this.toBitmap(width, height)
     }
 
     private fun Bitmap.toEmojiMatrix(): List<List<String>> {

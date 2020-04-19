@@ -28,3 +28,13 @@ fun View.bindingSetEnabled(enabled: Boolean?) {
 fun View.bindingVisibleElseGone(visible: Boolean?) {
     this.visibility = if (visible == true) VISIBLE else GONE
 }
+
+@BindingAdapter("onLongClick")
+fun View.bindingOnLongClick(onLongClick: (() -> Unit)?) {
+    if (onLongClick == null) setOnLongClickListener(null)
+    else setOnLongClickListener {
+        onLongClick.invoke()
+        true
+    }
+
+}

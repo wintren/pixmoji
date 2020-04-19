@@ -30,7 +30,7 @@
                 android:layout_height="0dp"
                 android:layout_margin="16dp"
                 android:scaleType="centerInside"
-                app:drawable="@{viewModel.originalImage}"
+                bitmap="@{viewModel.originalImage}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/actions"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +54,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:longClickable="true"
+                    onLongClick="@{() -> viewModel.onSelectRandomAssetImageClick()}"
                     android:backgroundTint="@color/colorAccent"
                     android:onClick="@{() -> viewModel.onPickImageClick()}"
                     android:text="Pick Image"
@@ -128,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    app:bitmap="@{viewModel.emojiArtwork}" />
+                    bitmap="@{viewModel.emojiArtwork}" />
 
             </rocks.wintren.pixmoji.ZoomLayout>
 
@@ -144,7 +146,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
-                app:visibleElseGone="@{viewModel.showLoading}" />
+                visibleElseGone="@{viewModel.showLoading}" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -152,7 +154,7 @@
                 android:layout_gravity="center"
                 android:text="@{viewModel.loadingLabel}"
                 android:translationY="42dp"
-                app:visibleElseGone="@{viewModel.showLoading}"
+                visibleElseGone="@{viewModel.showLoadingLabel}"
                 tools:text="Progress..." />
         </FrameLayout>
 
