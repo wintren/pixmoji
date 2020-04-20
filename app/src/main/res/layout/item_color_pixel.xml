@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+
+        <variable
+            name="color"
+            type="Integer" />
+    </data>
+
+    <FrameLayout
+        android:background="@{color}"
+        android:layout_width="4dp"
+        android:layout_height="48dp"/>
+</layout>

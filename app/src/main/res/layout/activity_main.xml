@@ -29,7 +29,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="16dp"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 bitmap="@{viewModel.originalImage}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/actions"
@@ -94,14 +94,14 @@
                         android:layout_weight="60"
                         android:textColor="#fff"
                         android:onClick="@{ () -> viewModel.onEmojiSizeClick() }"
-                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:backgroundTint="@color/colorAccentDark"
                         android:text="@{viewModel.emojiSizeLabel}" />
 
                     <Button
                         android:layout_width="0dp"
                         android:textColor="#fff"
                         android:onClick="@{ () -> viewModel.onCanvasSizeClick() }"
-                        android:backgroundTint="@color/colorPrimaryDark"
+                        android:backgroundTint="@color/colorAccentDark"
                         android:layout_height="wrap_content"
                         android:layout_weight="40"
                         android:text="@{viewModel.canvasSizeLabel}" />

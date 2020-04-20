@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
     private fun onEvent(event: MainViewModel.MainEvent): Unit = when (event) {
         ResetZoom -> zoomLayout.resetZoom()
         PickImage -> launchPhotoPicker()
-//        is SaveEmojiArt -> saveImage(event.bitmap)
         is CheckPermissions -> handlePermissions(event.onPermissionGranted)
         is MainViewModel.MainEvent.Toast -> Toast
                 .makeText(this, event.message, Toast.LENGTH_SHORT)
@@ -138,61 +137,6 @@ class MainActivity : AppCompatActivity() {
         photoPickerIntent.type = "image/*"
         startActivityForResult(photoPickerIntent, RESULT_PHOTO_PICKER)
     }
-
-//    private fun saveFile(fileName: String, bitmap: Bitmap) {
-//        val path = Environment.getExternalStorageDirectory().toString()
-//        val file = File(path, "$fileName.png")
-//
-//        try {
-//            FileOutputStream(file).use { outputStream ->
-//                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-//            }
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//        }
-//        MediaStore.Images.Media.insertImage(
-//            contentResolver,
-//            file.absolutePath,
-//            file.name,
-//            file.name
-//        )
-//
-//        MediaScannerConnection.scanFile(this, arrayOf(file.path), arrayOf("image/jpeg"), null)
-//    }
-//
-//    private fun saveImage(finalBitmap: Bitmap) {
-//        val root = Environment
-//            .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-//            .toString()
-//        val dir = File("$root/$OUTPUT_FOLDER_NAME")
-//        dir.mkdirs()
-//
-//        val name = "EmojiArt"
-//        var filename = "$name.png"
-//        var file = File(dir, filename)
-//        var counter = 0
-//        while (file.exists()) {
-//            file = File(dir, "${name}_${counter}.png")
-//        }
-//
-//        try {
-//            val out = FileOutputStream(file)
-//            finalBitmap.compress(Bitmap.CompressFormat.PNG, 100, out)
-//            // sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED,
-//            //     Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
-//            out.flush()
-//            out.close()
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//        }
-//        // Tell the media scanner about the new file so that it is
-//// immediately available to the user.
-//        MediaScannerConnection.scanFile(this, arrayOf(file.toString()), null)
-//        { path, uri ->
-//            Log.i("ExternalStorage", "Scanned $path:")
-//            Log.i("ExternalStorage", "-> uri=$uri")
-//        }
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
