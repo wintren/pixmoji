@@ -8,20 +8,990 @@
         <variable
             name="viewModel"
             type="rocks.wintren.pixmoji.ColorEmojiViewModel" />
+
+        <variable
+            name="emoji"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/emojiTest"
             android:layout_width="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_height="160dp"
+            app:layout_constraintBottom_toTopOf="@+id/histogram"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:layout_margin="32dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/emojiDisplay"
+                android:id="@+id/emojiInput"
+                android:hint="Emoji"
+                android:text="@={emoji}"
+                android:gravity="center_horizontal"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/emojiGrid"
+                app:layout_constraintStart_toEndOf="@id/emojiInput"
+                android:text="@{emoji}"
+                backgroundFromText="@{emoji}"
+                android:textColor="#000"
+                android:textSize="24sp"
+                android:gravity="center"
+                android:id="@+id/emojiDisplay"
+                android:background="@color/colorAccentLight"
+                android:layout_width="80dp"
+                android:layout_height="80dp" />
+
+            <GridLayout
+                android:id="@+id/emojiGrid"
+                app:layout_constraintStart_toStartOf="@id/emojiDisplay"
+                app:layout_constraintEnd_toEndOf="@id/emojiDisplay"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/emojiDisplay"
+                android:rowCount="10"
+                android:columnCount="10"
+                android:layout_width="0dp"
+                android:layout_height="0dp">
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+                <TextView
+                    android:text="@{emoji}"
+                    tools:text="B"
+                    android:textColor="#000"
+                    android:textSize="7sp"
+                    android:gravity="center"
+                    android:layout_width="22px"
+                    android:layout_height="22px" />
+
+
+
+            </GridLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/histogram"
             horizontalAdapter="@{viewModel.colorAdapter}"
-            android:layout_margin="16dp" />
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emojiTest" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

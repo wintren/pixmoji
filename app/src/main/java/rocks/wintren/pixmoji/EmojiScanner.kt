@@ -1,66 +1,20 @@
 package rocks.wintren.pixmoji
 
-import android.content.Context
+import android.R.color
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.Color.TRANSPARENT
 import androidx.annotation.ColorInt
+import androidx.core.graphics.get
+import io.reactivex.rxjava3.core.Completable
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import kotlin.math.abs
+import kotlin.math.hypot
+import kotlin.math.pow
+
 
 object EmojiScanner {
-
-    fun run(context: Context) {
-        readEmojis(context)
-        parseColors()
-    }
-
-    private fun readEmojis(context: Context) {
-
-        val fileNames = EmojiRepo.getFileNames()
-        for (filename in fileNames) {
-            val stream = PixMojiApp.appContext.assets.open(filename)
-//            val stream = context.assets.open(filename)
-            val lines = stream.bufferedReader().readLines()
-            val emojis = lines.map {
-                val split = it.split(' ')
-                val emoticon = split.first()
-                val name = split.toMutableList().run {
-                    removeAt(0)
-                    joinToString(" ")
-                }
-                Emoji(name, 0, emoticon)
-            }
-            EmojiRepo.initialiseCollection(filename, emojis)
-        }
-    }
-
-    private fun parseColors() {
-        val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Small)
-        val collections = EmojiRepo.getCollections()
-
-        val x= collections.map { collection ->
-             collection.name to collection.emojis.map {
-                    val emojiBitmap = factory.createEmoji(it.emoticon)
-                    val dominantColor = emojiBitmap.getDominantColor()
-                    emojiBitmap.recycle()
-                    it.copy(colorValue = dominantColor)
-                }
-
-        }
-        x.forEach { pair ->
-            d("------- Collection: ${pair.first}")
-            pair.second.forEach { d(it.toString()) }
-        }
-
-    }
-
-    private fun Bitmap.getDominantColor(): Int {
-        val newBitmap = Bitmap.createScaledBitmap(this, 1, 1, true)
-        val color = newBitmap.getPixel(0, 0)
-        newBitmap.recycle()
-        return color
-    }
-
-}
-
-object EmojiRepo {
 
     private val emojiFilesAndNames = mapOf(
         "people.txt" to "People",
@@ -73,24 +27,66 @@ object EmojiRepo {
         "travel.txt" to "Travel"
     )
 
-    private val collections: MutableMap<String, EmojiCollection> = mutableMapOf()
+    private fun getFileNames() = emojiFilesAndNames.keys
+    private fun getCategoryName(filename: String): String =
+        emojiFilesAndNames.getOrDefault(filename, "N/A")
 
-    fun getFileNames() = emojiFilesAndNames.keys
-
-    fun initialiseCollection(file: String, emojiList: List<Emoji>) {
-        val collectionName = emojiFilesAndNames.getValue(file)
-        collections[file] = EmojiCollection(collectionName, emojiList)
+    fun run(): Completable {
+        return Completable.create { emitter ->
+            readEmojis()
+            emitter.onComplete()
+        }.subscribeOn(ioThread)
     }
 
-    fun getCollections(): List<EmojiCollection> {
-        return collections.values.toList()
+    sealed class ScanEmojisResult {
+        data class InProgress(val category: String, val percent: Int) : ScanEmojisResult()
+        data class Finished(val emojis: List<Emoji>)
     }
+
+    fun readEmojis(): Observable<List<Emoji>> {
+        return Observable.just(getFileNames())
+            .observeOn(ioThread)
+            .flatMapIterable { it }
+            .flatMap { readEmojisForFile(it).toObservable() }
+
+    }
+
+    private fun readEmojisForFile(filename: String): Single<List<Emoji>> {
+        return Single.create { emitter ->
+            val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Small)
+            val stream = PixMojiApp.appContext.assets.open(filename)
+
+            val lines = stream.bufferedReader().readLines()
+            val emojis = lines.map {
+                val split = it.split(' ')
+                val emoticon = split.first()
+                val name = split.toMutableList().run {
+                    removeAt(0)
+                    joinToString(" ")
+                }
+                val emojiBitmap = factory.createEmoji(emoticon)
+                val color = EmojiColor.emojiColor(emojiBitmap)
+                d("Added to $filename: $emoticon $color $name")
+                Emoji(filename, name, color, emoticon)
+            }
+//            d("Emojis: ${emojis.toTypedArray()}")
+            EmojiRepo.collections.add(EmojiCollection(getCategoryName(filename), emojis))
+            emitter.onSuccess(emojis)
+        }
+    }
+
+}
+
+object EmojiRepo {
+
+    val collections: MutableList<EmojiCollection> = mutableListOf()
 
 }
 
 data class EmojiCollection(val name: String, val emojis: List<Emoji>)
 
 data class Emoji(
+    val category: String,
     val name: String,
     @ColorInt val colorValue: Int,
     val emoticon: String

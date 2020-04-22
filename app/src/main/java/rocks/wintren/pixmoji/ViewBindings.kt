@@ -1,11 +1,14 @@
 package rocks.wintren.pixmoji
 
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.ColorSpace
 import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 
 
@@ -37,4 +40,18 @@ fun View.bindingOnLongClick(onLongClick: (() -> Unit)?) {
         true
     }
 
+}
+
+@BindingAdapter("backgroundFromText")
+fun View.bindingBackgroundFromText(text: String?) {
+    val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Tiny)
+    val regex =
+        "\\u00a9|\\u00ae|[\\u2000-\\u3300]|\\ud83c[\\ud000-\\udfff]|\\ud83d[\\ud000-\\udfff]|\\ud83e[\\ud000-\\udfff]"
+    if(text != null) {
+        val bitmap = factory.createEmoji(text)
+        val color = EmojiColor.getDominantColor(bitmap)
+        setBackgroundColor(color)
+    } else {
+        setBackgroundColor(Color.TRANSPARENT)
+    }
 }
