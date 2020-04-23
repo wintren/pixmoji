@@ -1,11 +1,11 @@
 package rocks.wintren.pixmoji
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -24,9 +24,23 @@ class ColorEmojiActivity : AppCompatActivity() {
         binding.viewModel = viewModel
 
         viewModel.start()
-        binding.emoji = "\uD83E\uDDC4"
+
+        testColorMap(binding)
+
+    }
+
+    private fun testColorMap(binding: ActivityColorEmojiBinding) {
+        val fillerMap = ColorEmojiMap()
+        emojis.forEach { (color, emoji) -> fillerMap.addEmoji(color, emoji) }
+        fillerMap.finalise()
+
+        val closestEmoji = fillerMap.getClosest(Color.BLUE)
+
+        binding.emoji = closestEmoji.random()
+
     }
 }
+
 
 @BindingAdapter("addTextViews")
 fun bindingAddTextViews(layout: LinearLayout, textList: List<String>?) {

@@ -27,7 +27,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
+            <androidx.emoji.widget.EmojiAppCompatEditText
                 android:layout_margin="32dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -40,7 +40,7 @@
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"/>
 
-            <TextView
+            <androidx.emoji.widget.EmojiTextView
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/emojiGrid"
@@ -67,7 +67,7 @@
                 android:layout_height="0dp">
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -76,7 +76,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -85,7 +85,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -94,7 +94,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -103,7 +103,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -112,7 +112,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -121,7 +121,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -130,7 +130,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -139,7 +139,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -148,7 +148,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -158,7 +158,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -167,7 +167,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -176,7 +176,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -185,7 +185,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -194,7 +194,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -203,7 +203,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -212,7 +212,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -221,7 +221,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -230,7 +230,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -239,7 +239,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -249,7 +249,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -258,7 +258,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -267,7 +267,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -276,7 +276,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -285,7 +285,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -294,7 +294,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -303,7 +303,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -312,7 +312,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -321,7 +321,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -330,7 +330,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -340,7 +340,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -349,7 +349,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -358,7 +358,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -367,7 +367,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -376,7 +376,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -385,7 +385,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -394,7 +394,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -403,7 +403,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -412,7 +412,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -421,7 +421,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -431,7 +431,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -440,7 +440,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -449,7 +449,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -458,7 +458,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -467,7 +467,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -476,7 +476,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -485,7 +485,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -494,7 +494,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -503,7 +503,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -512,7 +512,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -522,7 +522,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -531,7 +531,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -540,7 +540,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -549,7 +549,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -558,7 +558,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -567,7 +567,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -576,7 +576,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -585,7 +585,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -594,7 +594,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -603,7 +603,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -613,7 +613,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -622,7 +622,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -631,7 +631,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -640,7 +640,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -649,7 +649,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -658,7 +658,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -667,7 +667,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -676,7 +676,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -685,7 +685,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -694,7 +694,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -704,7 +704,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -713,7 +713,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -722,7 +722,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -731,7 +731,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -740,7 +740,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -749,7 +749,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -758,7 +758,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -767,7 +767,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -776,7 +776,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -785,7 +785,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -795,7 +795,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -804,7 +804,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -813,7 +813,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -822,7 +822,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -831,7 +831,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -840,7 +840,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -849,7 +849,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -858,7 +858,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -867,7 +867,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -876,7 +876,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -886,7 +886,7 @@
                     android:layout_height="22px" />
 
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -895,7 +895,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -904,7 +904,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -913,7 +913,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -922,7 +922,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -931,7 +931,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -940,7 +940,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -949,7 +949,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -958,7 +958,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"
@@ -967,7 +967,7 @@
                     android:layout_width="22px"
                     android:layout_height="22px" />
 
-                <TextView
+                <androidx.emoji.widget.EmojiTextView
                     android:text="@{emoji}"
                     tools:text="B"
                     android:textColor="#000"

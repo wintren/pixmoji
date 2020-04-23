@@ -1,17 +1,9 @@
 package rocks.wintren.pixmoji
 
-import android.R.color
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.Color.TRANSPARENT
 import androidx.annotation.ColorInt
-import androidx.core.graphics.get
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Single
-import kotlin.math.abs
-import kotlin.math.hypot
-import kotlin.math.pow
 
 
 object EmojiScanner {
@@ -54,7 +46,7 @@ object EmojiScanner {
     private fun readEmojisForFile(filename: String): Single<List<Emoji>> {
         return Single.create { emitter ->
             val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Small)
-            val stream = PixMojiApp.appContext.assets.open(filename)
+            val stream = MojiApp.appContext.assets.open(filename)
 
             val lines = stream.bufferedReader().readLines()
             val emojis = lines.map {

@@ -40,7 +40,7 @@ class MainViewModel : BaseViewModel() {
     fun onSelectRandomAssetImageClick() {
         val randomFile = files.random()
 
-        val assetDrawable = PixMojiApp.appContext.getDrawableFromAssets(randomFile)
+        val assetDrawable = MojiApp.appContext.getDrawableFromAssets(randomFile)
         pickedImage(assetDrawable.toBitmap())
     }
 

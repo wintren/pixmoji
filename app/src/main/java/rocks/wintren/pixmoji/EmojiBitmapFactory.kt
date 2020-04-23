@@ -10,6 +10,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.IntRange
 import androidx.core.graphics.applyCanvas
+import androidx.emoji.text.EmojiCompat
+import androidx.emoji.widget.EmojiTextView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.text.SimpleDateFormat
@@ -151,11 +153,11 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
 
 
     private fun createEmojiTextView(emoji: String): TextView {
-        return TextView(PixMojiApp.appContext).apply {
+        return TextView(MojiApp.appContext).apply {
             val sideLength = scale.moxelSize
             layoutParams = ViewGroup.LayoutParams(sideLength, sideLength)
             gravity = Gravity.CENTER
-            text = emoji
+            text = EmojiCompat.get().process(emoji)
             setTextSize(TypedValue.COMPLEX_UNIT_SP, scale.textSize)
             includeFontPadding = false
             setTextColor(Color.BLACK)
