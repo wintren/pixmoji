@@ -1,7 +1,9 @@
 package rocks.wintren.pixmoji
 
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.PorterDuff
 import androidx.core.graphics.get
 import kotlin.math.abs
 import kotlin.math.hypot
@@ -81,7 +83,12 @@ object MojiColorUtil {
 
 
     fun getDominantColor(bitmap: Bitmap): Int {
-        val newBitmap = Bitmap.createScaledBitmap(bitmap, 20, 20, true)
+        val canvasBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
+        Canvas(canvasBitmap).apply {
+            drawColor(Color.WHITE)
+            drawBitmap(bitmap, 0f, 0f, null)
+        }
+        val newBitmap = Bitmap.createScaledBitmap(canvasBitmap, 20, 20, true)
         val color = newBitmap.getAverageARGB()
         newBitmap.recycle()
         return color

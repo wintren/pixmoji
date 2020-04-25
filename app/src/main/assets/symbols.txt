@@ -28,30 +28,6 @@
 ♨ Hot Springs
 💈 Barber Pole
 🛑 Stop Sign
-🕛 Twelve O’Clock
-🕧 Twelve-Thirty
-🕐 One O’Clock
-🕜 One-Thirty
-🕑 Two O’Clock
-🕝 Two-Thirty
-🕒 Three O’Clock
-🕞 Three-Thirty
-🕓 Four O’Clock
-🕟 Four-Thirty
-🕔 Five O’Clock
-🕠 Five-Thirty
-🕕 Six O’Clock
-🕡 Six-Thirty
-🕖 Seven O’Clock
-🕢 Seven-Thirty
-🕗 Eight O’Clock
-🕣 Eight-Thirty
-🕘 Nine O’Clock
-🕤 Nine-Thirty
-🕙 Ten O’Clock
-🕥 Ten-Thirty
-🕚 Eleven O’Clock
-🕦 Eleven-Thirty
 🌀 Cyclone
 ♠ Spade Suit
 ♥ Heart Suit
@@ -108,11 +84,6 @@
 ⤵ Right Arrow Curving Down
 🔃 Clockwise Vertical Arrows
 🔄 Counterclockwise Arrows Button
-🔙 Back Arrow
-🔚 End Arrow
-🔛 On! Arrow
-🔜 Soon Arrow
-🔝 Top Arrow
 🛐 Place of Worship
 ⚛ Atom Symbol
 🕉 Om
@@ -157,16 +128,9 @@
 📶 Antenna Bars
 📳 Vibration Mode
 📴 Mobile Phone Off
-✖ Multiply
-➕ Plus
-➖ Minus
-➗ Divide
-♾ Infinity
 ‼ Double Exclamation Mark
 ⁉ Exclamation Question Mark
 ❓ Question Mark
-❔ White Question Mark
-❕ White Exclamation Mark
 ❗ Exclamation Mark
 ♻ Recycling Symbol
 🔱 Trident Emblem
@@ -178,15 +142,6 @@
 ✔ Check Mark
 ❌ Cross Mark
 ❎ Cross Mark Button
-➰ Curly Loop
-➿ Double Curly Loop
-〽 Part Alternation Mark
-✳ Eight-Spoked Asterisk
-✴ Eight-Pointed Star
-❇ Sparkle
-© Copyright
-® Registered
-™ Trade Mark
 #️⃣ Keycap Number Sign
 0️⃣ Keycap Digit Zero
 1️⃣ Keycap Digit One
@@ -258,10 +213,6 @@
 ⬜ White Large Square
 ◼ Black Medium Square
 ◻ White Medium Square
-◾ Black Medium-Small Square
-◽ White Medium-Small Square
-▪ Black Small Square
-▫ White Small Square
 🔶 Large Orange Diamond
 🔷 Large Blue Diamond
 🔸 Small Orange Diamond

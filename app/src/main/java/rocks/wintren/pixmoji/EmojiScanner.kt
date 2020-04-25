@@ -7,14 +7,14 @@ import io.reactivex.rxjava3.core.Completable
 object EmojiScanner {
 
     private val emojiFilesAndNames = mapOf(
-        "people.txt" to "People",
-        "activities.txt" to "Activities",
-        "flags.txt" to "Flags",
-        "food.txt" to "Food",
-        "natureAnimals.txt" to "Nature & Animals",
-        "objects.txt" to "Objects",
-        "symbols.txt" to "Symbols",
-        "travel.txt" to "Travel"
+//        "people.txt" to "People",
+//        "activities.txt" to "Activities",
+//        "flags.txt" to "Flags",
+//        "food.txt" to "Food",
+//        "natureAnimals.txt" to "Nature & Animals",
+        "objects.txt" to "Objects"
+//        "symbols.txt" to "Symbols"
+//        "travel.txt" to "Travel"
     )
 
     private fun getFileNames() = emojiFilesAndNames.keys
@@ -56,9 +56,14 @@ object EmojiScanner {
                         removeAt(0)
                         joinToString(" ")
                     }
+
+                    // todo, Emoji writing hand has pretty emoji non BW.
+                    // remove all BW?
+
                     val emojiBitmap = factory.createEmoji(emoticon)
                     val color = MojiColorUtil.getDominantColor(emojiBitmap)
-                    EmojiRepository.addEmoji(color, emoticon)
+                    val emoji = Emoji(getCategoryName(filename), name, color, emoticon)
+                    EmojiRepository.addEmoji(color, emoji)
                     emoticon
                 }
                 i("ReadEmojis: " + emojis.joinToString(" "))

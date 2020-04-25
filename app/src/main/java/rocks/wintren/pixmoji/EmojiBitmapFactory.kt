@@ -96,7 +96,7 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
         }
     }
 
-    private fun Bitmap.toEmojiMatrix(): List<List<String>> {
+    private fun Bitmap.toEmojiMatrix(): List<List<Emoji>> {
         setHasAlpha(true)
         val pixelColorMatrix: Array<Array<Int>> =
             Array(width) { Array(height) { Color.TRANSPARENT } }
@@ -117,16 +117,15 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
                         EmojiRepository.getEmoji(pixel)
                     } catch (e: Exception) {
                         val hexColor = String.format("#%06X", 0xFFFFFF and pixel)
-                        e("Couldn't find emoji for color $hexColor , $pixel")
-                        "\uD83C\uDFF3️"
+                        throw RuntimeException("Couldn't find emoji for color $hexColor , $pixel")
                     }
                     emoji
-                } else TRANSPARENT
+                } else Emoji(TRANSPARENT, TRANSPARENT, Color.TRANSPARENT, "X")
             }
         }
     }
 
-    private fun List<List<String>>.matrixToArtwork(
+    private fun List<List<Emoji>>.matrixToArtwork(
         scale: EmojiScale,
         progressCallback: (percentDone: Int) -> Unit
     ): Bitmap {
@@ -155,19 +154,34 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
                     }
                     for (row in 0 until emojiRows) {
                         val emoji = emojiMatrix[col][row]
-                        if (emoji != TRANSPARENT) {
-                            val emojiBitmap = createEmoji(emoji)
+                        if (emoji.category != TRANSPARENT) {
+                            val emojiBitmap = createEmoji(emoji.emoticon)
                             val x = (col * singleEmojiSide).toFloat()
                             val y = (row * singleEmojiSide).toFloat()
                             val length = emojiBitmap.width
-                            val paint = Paint().apply {
-//                                val dominantColor = MojiColorUtil.getDominantColor(emojiBitmap)
-//                                val colorColor = Color.valueOf(dominantColor)
-//                                val adjustedColor = colorColor.let { Color.argb(30f, it.red(), it.green(), it.blue()) }
-                                color = Color.WHITE
+                            val emojiPaint = Paint().apply {
+                                val dominantColor = MojiColorUtil.getDominantColor(emojiBitmap)
+                                val colorColor = Color.valueOf(dominantColor)
+                                val adjustedColor = colorColor.let {
+                                    Color.argb(
+                                        1f,
+                                        it.red(),
+                                        it.green(),
+                                        it.blue()
+                                    )
+                                }
+                                color = adjustedColor
                             }
+
+                            val whitePaint = Paint().apply { color = Color.WHITE }
                             // Paint white background to not save as transparent.
-                            drawRect(x, y, x + length, y + length, paint)
+                            drawRect(x, y, x + length, y + length, whitePaint)
+//                            drawCircle(
+//                                x + length / 2f,
+//                                y + length / 2f,
+//                                length * 0.5f,
+//                                emojiPaint
+//                            )
                             drawBitmap(emojiBitmap, x, y, null)
                         }
                     }

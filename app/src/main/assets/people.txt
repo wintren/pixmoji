@@ -16,7 +16,7 @@
 🤩 Star-Struck
 😘 Face Blowing a Kiss
 😗 Kissing Face
-☺ Smiling Face
+☺️ Smiling Face
 😚 Kissing Face with Closed Eyes
 😙 Kissing Face with Smiling Eyes
 😋 Face Savoring Food
@@ -63,7 +63,6 @@
 😕 Confused Face
 😟 Worried Face
 🙁 Slightly Frowning Face
-☹ Frowning Face
 😮 Face with Open Mouth
 😯 Hushed Face
 😲 Astonished Face
@@ -91,7 +90,6 @@
 😈 Smiling Face with Horns
 👿 Angry Face with Horns
 💀 Skull
-☠ Skull and Crossbones
 💩 Pile of Poo
 🤡 Clown Face
 👹 Ogre
@@ -117,7 +115,7 @@
 🖖 Vulcan Salute
 👌 OK Hand
 🤏 Pinching Hand
-✌ Victory Hand
+✌️ Victory Hand
 🤞 Crossed Fingers
 🤟 Love-You Gesture
 🤘 Sign of the Horns
@@ -127,7 +125,7 @@
 👆 Backhand Index Pointing Up
 🖕 Middle Finger
 👇 Backhand Index Pointing Down
-☝ Index Pointing Up
+☝️ Index Pointing Up
 👍 Thumbs Up
 👎 Thumbs Down
 ✊ Raised Fist
@@ -140,7 +138,7 @@
 🤲 Palms Up Together
 🤝 Handshake
 🙏 Folded Hands
-✍ Writing Hand
+✍️ Writing Hand
 💅 Nail Polish
 🤳 Selfie
 💪 Flexed Biceps
@@ -395,7 +393,6 @@
 👣 Footprints
 🧳 Luggage
 🌂 Closed Umbrella
-☂ Umbrella
 🧵 Thread
 🧶 Yarn
 👓 Glasses

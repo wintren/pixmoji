@@ -4,16 +4,16 @@ import androidx.annotation.ColorInt
 
 class ColorEmojiMap {
 
-    val colorEmojiMap: MutableMap<Int, MutableList<String>> = mutableMapOf()
+    val colorEmojiMap: MutableMap<Int, MutableList<Emoji>> = mutableMapOf()
     private val colorIndexCache: MutableMap<Int, Int> = mutableMapOf()
 
-    fun addEmoji(@ColorInt color: Int, emoji: String) {
+    fun addEmoji(@ColorInt color: Int, emoji: Emoji) {
         colorEmojiMap[color] = colorEmojiMap
             .getOrDefault(color, mutableListOf())
             .apply { add(emoji) }
     }
 
-    fun getEmojisForColor(@ColorInt color: Int): List<String> {
+    fun getEmojisForColor(@ColorInt color: Int): List<Emoji> {
         return colorIndexCache[color]
             ?.let { quickIndex -> colorEmojiMap[quickIndex] }
             ?: closestColor(colorEmojiMap.keys, color)
