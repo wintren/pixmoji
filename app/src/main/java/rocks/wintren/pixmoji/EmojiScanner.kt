@@ -7,8 +7,7 @@ import io.reactivex.rxjava3.core.Completable
 object EmojiScanner {
 
     private val emojiFilesAndNames = mapOf(
-        "reduced_people.txt" to "People",
-//        "people.txt" to "People",
+        "people.txt" to "People",
         "activities.txt" to "Activities",
         "flags.txt" to "Flags",
         "food.txt" to "Food",
@@ -45,23 +44,23 @@ object EmojiScanner {
             getFileNames().forEach { filename ->
 
 
-            w("Read Emojis: $filename")
-            val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Small)
-            val stream = MojiApp.appContext.assets.open(filename)
+                w("Read Emojis: $filename")
+                val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Small)
+                val stream = MojiApp.appContext.assets.open(filename)
 
-            val lines = stream.bufferedReader().readLines()
-            val emojis = lines.map {
-                val split = it.split(' ')
-                val emoticon = split.first()
-                val name = split.toMutableList().run {
-                    removeAt(0)
-                    joinToString(" ")
+                val lines = stream.bufferedReader().readLines()
+                val emojis = lines.map {
+                    val split = it.split(' ')
+                    val emoticon = split.first()
+                    val name = split.toMutableList().run {
+                        removeAt(0)
+                        joinToString(" ")
+                    }
+                    val emojiBitmap = factory.createEmoji(emoticon)
+                    val color = MojiColorUtil.getDominantColor(emojiBitmap)
+                    EmojiRepository.addEmoji(color, emoticon)
+                    emoticon
                 }
-                val emojiBitmap = factory.createEmoji(emoticon)
-                val color = MojiColorUtil.getDominantColor(emojiBitmap)
-                EmojiRepository.addEmoji(color, emoticon)
-                emoticon
-            }
                 i("ReadEmojis: " + emojis.joinToString(" "))
             }
 
