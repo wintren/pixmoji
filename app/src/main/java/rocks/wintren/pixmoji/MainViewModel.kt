@@ -37,8 +37,9 @@ class MainViewModel : BaseViewModel() {
         canvasSizeLabel.value = "$canvasSize"
     }
 
+    var filesIndex = 0
     fun onSelectRandomAssetImageClick() {
-        val randomFile = files.random()
+        val randomFile = files[(filesIndex++ % files.size)]
 
         val assetDrawable = MojiApp.appContext.getDrawableFromAssets(randomFile)
         pickedImage(assetDrawable.toBitmap())
@@ -150,14 +151,15 @@ class MainViewModel : BaseViewModel() {
     private companion object {
         private val canvasSizes = listOf(1000, 3000, 5000, 9999)
         private val files = listOf(
+            "sonic.jpg",
+            "pikachu.jpg",
+            "Jazza.jpg",
+            "mario.png",
+            "sonic2.png",
+            "mario_cart.jpg",
             "landscape.jpeg",
             "link.jpg",
-            "mario.png",
-            "mario_cart.jpg",
-            "milo.png",
-            "pikachu.jpg",
-            "sonic.jpg",
-            "sonic2.png"
+            "milo.png"
         )
         private const val OUTPUT_FOLDER_NAME = "EmojiArt"
     }

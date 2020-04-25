@@ -9,11 +9,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_color_emoji.*
+import rocks.wintren.pixmoji.adapter.BindingAdapterItem
+import rocks.wintren.pixmoji.adapter.SimpleBindingAdapter
 import rocks.wintren.pixmoji.databinding.ActivityColorEmojiBinding
+import java.util.*
 
 class ColorEmojiActivity : AppCompatActivity() {
 
     private lateinit var viewModel: ColorEmojiViewModel
+
+    data class HexStringColor(val hexString: String, val color: Int)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,16 +32,42 @@ class ColorEmojiActivity : AppCompatActivity() {
 
         viewModel.start()
 
-        testColorMap(binding)
+//        testColorMap(binding)
+
+        val adapter = SimpleBindingAdapter()
+        histogram.adapter = adapter
+        histogram.layoutManager = LinearLayoutManager(this)
+
+        EmojiRepository.ready
+            .filter { it }
+            .observeOn(computationThread)
+            .map {
+                val colorComparator = ColorComparator()
+                EmojiRepository.colorEmojiMap.colorEmojiMap
+                    .flatMap { entry ->
+                        entry.value.map { it to entry.key }
+                    }
+                    .map { HexStringColor(it.first, it.second) }
+            }
+
+            .observeOn(mainThread)
+            .subscribe { emojis ->
+                    emojis.map { BindingAdapterItem(R.layout.item_color_debug, BR.item, it) }
+                    .let { adapter.submitList(it) }
+
+            }
+
 
     }
+
+    val randomColor: Int get() = (Color.BLACK..Color.WHITE).random()
 
     private fun testColorMap(binding: ActivityColorEmojiBinding) {
         val fillerMap = ColorEmojiMap()
         emojis.forEach { (color, emoji) -> fillerMap.addEmoji(color, emoji) }
-        fillerMap.finalise()
+//        fillerMap.finalise()
 
-        val closestEmoji = fillerMap.getClosest(Color.BLUE)
+        val closestEmoji = fillerMap.getEmojisForColor(Color.BLUE)
 
         binding.emoji = closestEmoji.random()
 

@@ -4,44 +4,37 @@ import androidx.annotation.ColorInt
 
 class ColorEmojiMap {
 
-    private var finalised = false
-
-    private lateinit var referenceMap: MutableMap<IntRange, Int>
-    private val colorEmojiMap: MutableMap<Int, MutableList<String>> = mutableMapOf()
+    val colorEmojiMap: MutableMap<Int, MutableList<String>> = mutableMapOf()
+    private val colorIndexCache: MutableMap<Int, Int> = mutableMapOf()
 
     fun addEmoji(@ColorInt color: Int, emoji: String) {
-        if (finalised) throw RuntimeException("Can't put values into a finalised FillerMap")
-        colorEmojiMap[color] = colorEmojiMap.getOrDefault(color, mutableListOf()).apply { add(emoji) }
+        colorEmojiMap[color] = colorEmojiMap
+            .getOrDefault(color, mutableListOf())
+            .apply { add(emoji) }
     }
 
-    fun finalise() {
-        finalised = true
-        referenceMap = mutableMapOf()
+    fun getEmojisForColor(@ColorInt color: Int): List<String> {
+        return colorIndexCache[color]
+            ?.let { quickIndex -> colorEmojiMap[quickIndex] }
+            ?: closestColor(colorEmojiMap.keys, color)
+                .let {
+                    colorEmojiMap[it]?.toList()
+                        ?: throw RuntimeException("No Emoji, something wrong! ($color)")
+                }
+    }
 
-        colorEmojiMap.keys.reduce { left, right ->
-            val diff = right - left
-            val halfwayBetween = (left + (diff / 2f)).toInt()
-
-            val leftHalf = left..halfwayBetween
-            val rightHalf = halfwayBetween..right
-
-            referenceMap[leftHalf] = left
-            referenceMap[rightHalf] = right
-
-            right
+    private fun closestColor(colors: Collection<Int>, pixelColor: Int): Int {
+        var closestDistance = Double.MAX_VALUE
+        var closestColor = 0
+        colors.forEach {
+            val distance = getDistance(it, pixelColor)
+            if (distance < closestDistance) {
+                closestDistance = distance
+                closestColor = it
+            }
         }
-
+        return closestColor
     }
 
-    fun getClosest(@ColorInt color: Int): List<String> {
-        if (!this::referenceMap.isInitialized) {
-            throw RuntimeException("Trying to call get Closest before finalising map.")
-        }
-
-        return colorEmojiMap[color]
-            ?: referenceMap.keys.firstOrNull { range -> color in range }
-                ?.let { range -> referenceMap[range] }
-                ?.let { shiftedKey -> colorEmojiMap[shiftedKey] }
-            ?: throw RuntimeException("Key $color was not present in map")
-    }
 }
+

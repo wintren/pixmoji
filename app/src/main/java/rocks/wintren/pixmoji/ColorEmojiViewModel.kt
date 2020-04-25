@@ -19,29 +19,29 @@ class ColorEmojiViewModel : BaseViewModel() {
     }
 
     private fun readEmojis() {
-        EmojiScanner.readEmojis()
-            .observeOn(computationThread)
-            .map { list ->
-                val colorComparator = ColorComparator()
-                list.sortedWith(Comparator { e1, e2 ->
-                    colorComparator.compare(
-                        e1.colorValue,
-                        e2.colorValue
-                    )
-                })
-            }
-            .map { list ->
-                list.map { EmojiDisplayColumnItem(it.colorValue, listOf(it.emoticon)) }
-            }
-            .map { list ->
-                list.map { BindingAdapterItem(R.layout.item_color_pixel, BR.emojiColumn, it) }
-            }
-            .observeOn(mainThread)
-            .subscribe({ list ->
-                colorAdapter.submitList(list)
-            }, {
-                it.printStackTrace()
-            })
+//        EmojiScanner.readEmojis()
+//            .observeOn(computationThread)
+//            .map { list ->
+//                val colorComparator = ColorComparator()
+//                list.sortedWith(Comparator { e1, e2 ->
+//                    colorComparator.compare(
+//                        e1.colorValue,
+//                        e2.colorValue
+//                    )
+//                })
+//            }
+//            .map { list ->
+//                list.map { EmojiDisplayColumnItem(it.colorValue, listOf(it.emoticon)) }
+//            }
+//            .map { list ->
+//                list.map { BindingAdapterItem(R.layout.item_color_pixel, BR.emojiColumn, it) }
+//            }
+//            .observeOn(mainThread)
+//            .subscribe({ list ->
+//                colorAdapter.submitList(list)
+//            }, {
+//                it.printStackTrace()
+//            })
     }
 
 }

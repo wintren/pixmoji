@@ -982,9 +982,9 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--            horizontalAdapter="@{viewModel.colorAdapter}"-->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/histogram"
-            horizontalAdapter="@{viewModel.colorAdapter}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"

@@ -3,6 +3,7 @@ package rocks.wintren.pixmoji
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
@@ -11,7 +12,6 @@ import android.widget.TextView
 import androidx.annotation.IntRange
 import androidx.core.graphics.applyCanvas
 import androidx.emoji.text.EmojiCompat
-import androidx.emoji.widget.EmojiTextView
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.text.SimpleDateFormat
@@ -22,11 +22,12 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
 
     fun createEmoji(emoji: String): Bitmap {
         val emojiTextView = createEmojiTextView(emoji)
-        return emojiTextView.toBitmap()
+        return emojiTextView.matrixToArtwork()
     }
 
     sealed class CreateArtworkUpdate {
         data class Success(val artwork: Bitmap) : CreateArtworkUpdate()
+        object LoadingEmojis : CreateArtworkUpdate()
         data class InProgress(
             @IntRange(
                 from = 0,
@@ -51,13 +52,13 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
         emojiScale: EmojiScale,
         imageScale: Int
     ): Observable<CreateArtworkUpdate> {
-        return Observable.create<CreateArtworkUpdate> { emitter ->
+        val createArtworkObservable = Observable.create<CreateArtworkUpdate> { emitter ->
             val timeBefore = System.currentTimeMillis()
             emitter.onNext(CreateArtworkUpdate.InProgress(0))
 
             val scaledOriginalBitmap = originalBitmap.scaledBitmap(emojiScale, imageScale)
             val emojiMatrix = scaledOriginalBitmap.toEmojiMatrix()
-            val emojiArt = emojiMatrix.toBitmap(emojiScale) {
+            val emojiArt = emojiMatrix.matrixToArtwork(emojiScale) {
                 emitter.onNext(CreateArtworkUpdate.InProgress(it))
             }
 
@@ -68,6 +69,9 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
 
             emitter.onNext(CreateArtworkUpdate.Success(emojiArt))
         }.subscribeOn(Schedulers.computation())
+
+        return EmojiRepository.ready
+            .concatMap { if (it) createArtworkObservable else Observable.just(CreateArtworkUpdate.LoadingEmojis) }
     }
 
     private fun Bitmap.scaledBitmap(scale: EmojiScale, imageScale: Int): Bitmap {
@@ -105,12 +109,24 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
 
         return pixelColorMatrix.map { columns ->
             columns.map { pixel ->
-                if (pixel != Color.TRANSPARENT) getClosestEmoji(pixel) else TRANSPARENT
+                if (pixel != Color.TRANSPARENT) {
+                    val noAlphaPixel = Color.valueOf(pixel).let {
+                        Color.rgb(it.red(), it.green(), it.blue())
+                    }
+                    val emoji = try {
+                        EmojiRepository.getEmoji(pixel)
+                    } catch (e: Exception) {
+                        val hexColor = String.format("#%06X", 0xFFFFFF and pixel)
+                        e("Couldn't find emoji for color $hexColor , $pixel")
+                        "\uD83C\uDFF3️"
+                    }
+                    emoji
+                } else TRANSPARENT
             }
         }
     }
 
-    private fun List<List<String>>.toBitmap(
+    private fun List<List<String>>.matrixToArtwork(
         scale: EmojiScale,
         progressCallback: (percentDone: Int) -> Unit
     ): Bitmap {
@@ -141,9 +157,18 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
                         val emoji = emojiMatrix[col][row]
                         if (emoji != TRANSPARENT) {
                             val emojiBitmap = createEmoji(emoji)
-                            val x = col * singleEmojiSide
-                            val y = row * singleEmojiSide
-                            drawBitmap(emojiBitmap, x.toFloat(), y.toFloat(), null)
+                            val x = (col * singleEmojiSide).toFloat()
+                            val y = (row * singleEmojiSide).toFloat()
+                            val length = emojiBitmap.width
+                            val paint = Paint().apply {
+//                                val dominantColor = MojiColorUtil.getDominantColor(emojiBitmap)
+//                                val colorColor = Color.valueOf(dominantColor)
+//                                val adjustedColor = colorColor.let { Color.argb(30f, it.red(), it.green(), it.blue()) }
+                                color = Color.WHITE
+                            }
+                            // Paint white background to not save as transparent.
+                            drawRect(x, y, x + length, y + length, paint)
+                            drawBitmap(emojiBitmap, x, y, null)
                         }
                     }
                 }
@@ -161,14 +186,10 @@ class EmojiBitmapFactory(private val scale: EmojiScale) {
             setTextSize(TypedValue.COMPLEX_UNIT_SP, scale.textSize)
             includeFontPadding = false
             setTextColor(Color.BLACK)
-
-            // Basic and hacky way to get background color, works though
-//            val emojiColor = emojis.filterValues { it == emoji }.keys.first()
-//            setBackgroundColor(adjustAlpha(emojiColor, 100))
         }
     }
 
-    private fun TextView.toBitmap(): Bitmap {
+    private fun TextView.matrixToArtwork(): Bitmap {
         val view = this
         val sideLength = scale.moxelSize
         view.measure(

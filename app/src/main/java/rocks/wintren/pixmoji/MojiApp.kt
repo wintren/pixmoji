@@ -1,10 +1,8 @@
 package rocks.wintren.pixmoji
 
 import android.app.Application
-import androidx.core.provider.FontRequest
 import androidx.emoji.bundled.BundledEmojiCompatConfig
 import androidx.emoji.text.EmojiCompat
-import androidx.emoji.text.FontRequestEmojiCompatConfig
 
 class MojiApp : Application() {
 
@@ -12,33 +10,26 @@ class MojiApp : Application() {
         super.onCreate()
 
         appContext = this
+        initEmojis()
+    }
 
-//        val fontRequest = androidx.core.provider.FontRequest(
-//            "com.google.android.gms.fonts",
-//            "com.google.android.gms",
-//            "Noto Color Emoji Compat",
-//            android.R.array.com_google_android_gms_fonts_certs
-//        )
+    private fun initEmojis() {
         val config = BundledEmojiCompatConfig(this)
         EmojiCompat.init(config)
+        EmojiCompat.get().registerInitCallback(object : EmojiCompat.InitCallback() {
+            override fun onInitialized() {
+                EmojiScanner.importEmojis()
+            }
 
-//        val config = BundledEmojiCompatConfig(this)
-//        EmojiCompat.init(config)
-
-//        val fontRequest = FontRequest(
-//            "com.example.fontprovider",
-//            "com.example",
-//            "emoji compat Font Query",
-//            EmojiCompat.CERTIFICATES
-//        )
-//        val config = FontRequestEmojiCompatConfig(this, fontRequest)
-//        EmojiCompat.init(config)
-
+            override fun onFailed(throwable: Throwable?) {
+                throw throwable!!
+            }
+        })
     }
 
 
     companion object {
-    lateinit var appContext: Application
+        lateinit var appContext: Application
 
     }
 }

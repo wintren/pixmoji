@@ -2,14 +2,13 @@ package rocks.wintren.pixmoji
 
 import androidx.annotation.ColorInt
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 
 
 object EmojiScanner {
 
     private val emojiFilesAndNames = mapOf(
-        "people.txt" to "People",
+        "reduced_people.txt" to "People",
+//        "people.txt" to "People",
         "activities.txt" to "Activities",
         "flags.txt" to "Flags",
         "food.txt" to "Food",
@@ -23,11 +22,16 @@ object EmojiScanner {
     private fun getCategoryName(filename: String): String =
         emojiFilesAndNames.getOrDefault(filename, "N/A")
 
-    fun run(): Completable {
-        return Completable.create { emitter ->
-            readEmojis()
-            emitter.onComplete()
-        }.subscribeOn(ioThread)
+    var doneImportingEmojis = false
+    fun importEmojis() {
+        readEmojisFromFiles()
+            .subscribe(
+                {
+                    EmojiRepository.doneAddingEmojis()
+                    doneImportingEmojis = true
+                },
+                { e("EmojiScanner:ImportEmojis", it) }
+            )
     }
 
     sealed class ScanEmojisResult {
@@ -35,16 +39,13 @@ object EmojiScanner {
         data class Finished(val emojis: List<Emoji>)
     }
 
-    fun readEmojis(): Observable<List<Emoji>> {
-        return Observable.just(getFileNames())
-            .observeOn(ioThread)
-            .flatMapIterable { it }
-            .flatMap { readEmojisForFile(it).toObservable() }
+    private fun readEmojisFromFiles(): Completable {
+        return Completable.create { emitter ->
 
-    }
+            getFileNames().forEach { filename ->
 
-    private fun readEmojisForFile(filename: String): Single<List<Emoji>> {
-        return Single.create { emitter ->
+
+            w("Read Emojis: $filename")
             val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Small)
             val stream = MojiApp.appContext.assets.open(filename)
 
@@ -57,21 +58,16 @@ object EmojiScanner {
                     joinToString(" ")
                 }
                 val emojiBitmap = factory.createEmoji(emoticon)
-                val color = EmojiColor.emojiColor(emojiBitmap)
-                d("Added to $filename: $emoticon $color $name")
-                Emoji(filename, name, color, emoticon)
+                val color = MojiColorUtil.getDominantColor(emojiBitmap)
+                EmojiRepository.addEmoji(color, emoticon)
+                emoticon
             }
-//            d("Emojis: ${emojis.toTypedArray()}")
-            EmojiRepo.collections.add(EmojiCollection(getCategoryName(filename), emojis))
-            emitter.onSuccess(emojis)
-        }
+                i("ReadEmojis: " + emojis.joinToString(" "))
+            }
+
+            emitter.onComplete()
+        }.subscribeOn(ioThread)
     }
-
-}
-
-object EmojiRepo {
-
-    val collections: MutableList<EmojiCollection> = mutableListOf()
 
 }
 

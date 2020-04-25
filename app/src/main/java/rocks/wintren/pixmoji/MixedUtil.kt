@@ -8,6 +8,8 @@ import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.red
 import kotlin.math.sqrt
 
 
@@ -148,26 +150,10 @@ fun adjustAlpha(@ColorInt color: Int, alpha: Int): Int {
     return Color.argb(alpha, red, green, blue)
 }
 
-fun getClosestColor(pixelColor: Int): Int {
-    return colors
-        .map { color -> color to colorDistance(pixelColor, color) }
-        .sortedBy { it.second }
-        .map { it.first }
-        .first()
-}
-
 const val TRANSPARENT = ".transparent"
 
-fun getClosestEmoji(pixelColor: Int): String {
-    return colors
-        .map { color -> color to colorDistance(pixelColor, color) }
-        .sortedBy { it.second }
-        .map { it.first }
-        .first()
-        .let { emojis.getValue(it) }
-}
 
-fun colorDistance(colorInt1: Int, colorInt2: Int): Double {
+fun colorDistance1(colorInt1: Int, colorInt2: Int): Double {
     val c1 = Color.valueOf(colorInt1)
     val c2 = Color.valueOf(colorInt2)
     val red1 = c1.red()
@@ -181,3 +167,31 @@ fun colorDistance(colorInt1: Int, colorInt2: Int): Double {
     val blueValues = ((767 - rmean) * b * b).toInt() shr 8
     return sqrt((redValues + greenValues + blueValues).toDouble())
 }
+
+fun cd2(colorInt1: Int, colorInt2: Int) {
+    val color1 = Color.valueOf(colorInt1)
+
+}
+
+fun getDistance(a: Int, b: Int): Double {
+    val current = Color.valueOf(a)
+    val match = Color.valueOf(b)
+    val redDifference: Float
+    val greenDifference: Float
+    val blueDifference: Float
+    redDifference = current.red() - match.red()
+    greenDifference = current.green() - match.green()
+    blueDifference = current.blue()  - match.blue()
+    val distance = redDifference * redDifference + greenDifference * greenDifference + blueDifference * blueDifference
+    return distance.toDouble()
+}
+
+//fun colorDistance(c1: Color, c2: Color): Double {
+//    val red1: Int = c1.red()
+//    val red2: Int = c2.getRed()
+//    val rmean = red1 + red2 shr 1
+//    val r = red1 - red2
+//    val g: Int = c1.getGreen() - c2.getGreen()
+//    val b: Int = c1.getBlue() - c2.getBlue()
+//    return Math.sqrt(((512 + rmean) * r * r shr 8) + 4 * g * g + ((767 - rmean) * b * b shr 8).toDouble())
+//}

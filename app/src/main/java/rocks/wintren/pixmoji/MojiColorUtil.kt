@@ -7,7 +7,7 @@ import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.pow
 
-object EmojiColor {
+object MojiColorUtil {
 
     private fun Bitmap.getPixels(): IntArray {
         val intArray = IntArray(width * height) { Color.TRANSPARENT }
@@ -21,13 +21,14 @@ object EmojiColor {
      * JavaScript found online
      */
     fun emojiColor(bitmap: Bitmap): Int {
+        val newBitmap = Bitmap.createScaledBitmap(bitmap, 20, 20, true)
         var totalPixels = 0
         var red = 0f
         var green = 0f
         var blue = 0f
         var alpha = 0f
 
-        bitmap.getPixels()
+        newBitmap.getPixels()
             .map { Color.valueOf(it) }
             .forEach {
                 if (it.alpha() > 50) {
@@ -81,40 +82,46 @@ object EmojiColor {
 
     fun getDominantColor(bitmap: Bitmap): Int {
         val newBitmap = Bitmap.createScaledBitmap(bitmap, 20, 20, true)
-        val color = newBitmap.getAverageRGB()
+        val color = newBitmap.getAverageARGB()
         newBitmap.recycle()
         return color
     }
 
-    fun Bitmap.getAverageRGB(): Int {
-        var red: Float = 0f
-        var green: Float = 0f
-        var blue: Float = 0f
-        var num = 0
+    fun Bitmap.getAverageARGB(): Int {
+//        var alpha = 0f
+        var red = 0f
+        var green = 0f
+        var blue = 0f
+        var total = 0
         /* Iterate through a bounding box in which the circle lies */
         for (x in 0 until width) {
             for (y in 0 until height) {
                 /* If the pixel is outside the canvas, skip it */
-                if (x < 0 || x >= width || y < 0 || y >= height) continue
+//                if (x < 0 || x >= width || y < 0 || y >= height) continue
 
                 val pixel = this[x, y]
                 if (pixel == Color.TRANSPARENT) {
                     continue
                 } else {
-                    w("color $pixel")
+//                    w("color $pixel")
                 }
                 /* Get the color from the image, add to a running sum */
                 val pixelColor: Color = Color.valueOf(pixel)
 
                 /* Sum the squares of components instead */
+
+                // todo, alpha
+
+//                alpha += pixelColor.alpha().pow(2)
                 red += pixelColor.red().pow(2)
                 green += pixelColor.green().pow(2)
                 blue += pixelColor.blue().pow(2)
-                num++
+                total++
             }
         }
-        /* Return the mean of the R, G, and B components */
-        return Color.rgb(red / num, green / num, blue / num)
+        /* Return the mean of the A, R, G, and B components */
+        return Color.rgb(red / total, green / total, blue / total)
+//        return Color.argb(alpha / total, red / total, green / total, blue / total)
     }
 
     /*
@@ -142,7 +149,7 @@ object EmojiColor {
                 if (pixel == Color.TRANSPARENT) {
                     continue
                 } else {
-                    w("color $pixel")
+//                    w("color $pixel")
                 }
                 val pixelColor: Color = Color.valueOf(pixel)
 
