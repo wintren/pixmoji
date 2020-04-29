@@ -8,6 +8,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 @BindingAdapter("bitmap")
@@ -45,11 +47,16 @@ fun View.bindingBackgroundFromText(text: String?) {
     val factory = EmojiBitmapFactory(EmojiBitmapFactory.EmojiScale.Tiny)
     val regex =
         "\\u00a9|\\u00ae|[\\u2000-\\u3300]|\\ud83c[\\ud000-\\udfff]|\\ud83d[\\ud000-\\udfff]|\\ud83e[\\ud000-\\udfff]"
-    if(text != null) {
+    if (text != null) {
         val bitmap = factory.createEmoji(text)
         val color = MojiColorUtil.getDominantColor(bitmap)
         setBackgroundColor(color)
     } else {
         setBackgroundColor(Color.TRANSPARENT)
     }
+}
+
+@BindingAdapter("clipOutline")
+fun View.bindingSetClipToOutline(set: Boolean?) {
+    setClipToOutline(true)
 }
