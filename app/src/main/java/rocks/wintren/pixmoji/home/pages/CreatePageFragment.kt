@@ -8,18 +8,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import rocks.wintren.pixmoji.R
-import rocks.wintren.pixmoji.databinding.FragmentPageFourBinding
+import rocks.wintren.pixmoji.databinding.FragmentPageCreateBinding
 import rocks.wintren.pixmoji.home.HomeActivityViewModel
 
-class PageFourFragment : Fragment() {
+class CreatePageFragment : Fragment() {
 
     lateinit var parentViewModel: HomeActivityViewModel
-    lateinit var pageViewModel: PageFourViewModel
+    lateinit var createPageViewModel: CreatePageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentViewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
-        pageViewModel = ViewModelProvider(this).get(PageFourViewModel::class.java)
+        createPageViewModel = ViewModelProvider(this).get(CreatePageViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -27,14 +27,14 @@ class PageFourFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentPageFourBinding>(
+        return DataBindingUtil.inflate<FragmentPageCreateBinding>(
             inflater,
-            R.layout.fragment_page_four,
+            R.layout.fragment_page_create,
             container,
             false
         ).run {
-            viewModel = pageViewModel
-            lifecycleOwner = this@PageFourFragment
+            viewModel = createPageViewModel
+            lifecycleOwner = this@CreatePageFragment
             root
         }
     }

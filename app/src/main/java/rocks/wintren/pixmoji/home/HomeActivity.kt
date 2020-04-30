@@ -2,7 +2,6 @@ package rocks.wintren.pixmoji.home
 
 import android.graphics.Outline
 import android.os.Bundle
-import android.view.View
 import android.view.ViewOutlineProvider
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,18 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
 import kotlinx.android.synthetic.main.activity_home.*
 import rocks.wintren.pixmoji.R
 import rocks.wintren.pixmoji.d
 import rocks.wintren.pixmoji.databinding.ActivityHomeBinding
-import rocks.wintren.pixmoji.home.pages.PageFourFragment
-import rocks.wintren.pixmoji.home.pages.PageOneFragment
-import rocks.wintren.pixmoji.home.pages.PageThreeFragment
-import rocks.wintren.pixmoji.home.pages.PageTwoFragment
-import rocks.wintren.pixmoji.utils.DepthPageTransformer
+import rocks.wintren.pixmoji.home.pages.DisplayPageFragment
+import rocks.wintren.pixmoji.home.pages.PickPageFragment
+import rocks.wintren.pixmoji.home.pages.CreatePageFragment
+import rocks.wintren.pixmoji.home.pages.OptionsPageFragment
 import rocks.wintren.pixmoji.utils.PageTransformers
-import kotlin.math.abs
 
 
 class HomeActivity : AppCompatActivity() {
@@ -64,10 +60,10 @@ class PagesAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) 
 
     override fun createFragment(position: Int): Fragment {
         return when (position){
-            0 -> PageOneFragment()
-            1 -> PageTwoFragment()
-            2 -> PageThreeFragment()
-            3 -> PageFourFragment()
+            0 -> PickPageFragment()
+            1 -> OptionsPageFragment()
+            2 -> CreatePageFragment()
+            3 -> DisplayPageFragment()
             else -> throw RuntimeException("No page for index $position")
         }
     }

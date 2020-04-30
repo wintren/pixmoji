@@ -6,22 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import rocks.wintren.pixmoji.R
-import rocks.wintren.pixmoji.databinding.FragmentPageOneBinding
-import rocks.wintren.pixmoji.databinding.FragmentPageThreeBinding
+import rocks.wintren.pixmoji.databinding.FragmentPageDisplayBinding
 import rocks.wintren.pixmoji.home.HomeActivityViewModel
 
-class PageThreeFragment : Fragment() {
+class DisplayPageFragment : Fragment() {
 
-    lateinit var parentViewModel: HomeActivityViewModel
-    lateinit var pageViewModel: PageThreeViewModel
+    private lateinit var parentViewModel: HomeActivityViewModel
+    private lateinit var displayPageViewModel: DisplayPageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentViewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
-        pageViewModel = ViewModelProvider(this).get(PageThreeViewModel::class.java)
+        displayPageViewModel = ViewModelProvider(this).get(DisplayPageViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -29,14 +27,14 @@ class PageThreeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentPageThreeBinding>(
+        return DataBindingUtil.inflate<FragmentPageDisplayBinding>(
             inflater,
-            R.layout.fragment_page_three,
+            R.layout.fragment_page_display,
             container,
             false
         ).run {
-            viewModel = pageViewModel
-            lifecycleOwner = this@PageThreeFragment
+            viewModel = displayPageViewModel
+            lifecycleOwner = this@DisplayPageFragment
             root
         }
     }

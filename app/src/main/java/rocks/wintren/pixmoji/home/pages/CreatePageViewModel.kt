@@ -2,7 +2,7 @@ package rocks.wintren.pixmoji.home.pages
 
 import androidx.lifecycle.ViewModel
 
-class PageThreeViewModel : ViewModel() {
+class CreatePageViewModel : ViewModel() {
 
     val pageName: String = "Page Three"
 

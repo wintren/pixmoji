@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import rocks.wintren.pixmoji.R
-import rocks.wintren.pixmoji.databinding.FragmentPageTwoBinding
+import rocks.wintren.pixmoji.databinding.FragmentPagePickBinding
 import rocks.wintren.pixmoji.home.HomeActivityViewModel
 
-class PageTwoFragment : Fragment() {
+class PickPageFragment() : Fragment() {
 
     lateinit var parentViewModel: HomeActivityViewModel
-    lateinit var pageViewModel: PageTwoViewModel
+    lateinit var pickPageViewModel: PickPageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentViewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
-        pageViewModel = ViewModelProvider(this).get(PageTwoViewModel::class.java)
+        pickPageViewModel = ViewModelProvider(this).get(PickPageViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -28,11 +27,17 @@ class PageTwoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentPageTwoBinding>(inflater, R.layout.fragment_page_two, container, false).run {
-            viewModel = pageViewModel
-            lifecycleOwner = this@PageTwoFragment
+        return DataBindingUtil.inflate<FragmentPagePickBinding>(
+            inflater,
+            R.layout.fragment_page_pick,
+            container,
+            false
+        ).run {
+            viewModel = pickPageViewModel
+            lifecycleOwner = this@PickPageFragment
             root
         }
     }
+
 
 }

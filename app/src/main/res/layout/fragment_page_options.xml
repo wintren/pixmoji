@@ -6,17 +6,16 @@
 
         <variable
             name="viewModel"
-            type="rocks.wintren.pixmoji.home.pages.PageFourViewModel" />
+            type="rocks.wintren.pixmoji.home.pages.OptionsPageViewModel" />
     </data>
 
     <FrameLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#FFAF96"
+        android:background="@drawable/background_fragment_options"
         android:clipChildren="true"
         tools:context=".home.HomeActivity">
-
 
         <TextView
             android:layout_width="match_parent"

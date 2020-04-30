@@ -2,8 +2,8 @@ package rocks.wintren.pixmoji.home.pages
 
 import androidx.lifecycle.ViewModel
 
-class PageTwoViewModel : ViewModel() {
+class PickPageViewModel : ViewModel() {
 
-    val pageName: String = "Page Two"
+    val pageName: String = "Pick a Photo"
 
 }

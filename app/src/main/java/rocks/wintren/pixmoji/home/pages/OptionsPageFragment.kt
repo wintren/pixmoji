@@ -8,18 +8,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import rocks.wintren.pixmoji.R
-import rocks.wintren.pixmoji.databinding.FragmentPageOneBinding
+import rocks.wintren.pixmoji.databinding.FragmentPageOptionsBinding
 import rocks.wintren.pixmoji.home.HomeActivityViewModel
 
-class PageOneFragment() : Fragment() {
+class OptionsPageFragment : Fragment() {
 
     lateinit var parentViewModel: HomeActivityViewModel
-    lateinit var pageViewModel: PageOneViewModel
+    lateinit var optionsPageViewModel: OptionsPageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         parentViewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
-        pageViewModel = ViewModelProvider(this).get(PageOneViewModel::class.java)
+        optionsPageViewModel = ViewModelProvider(this).get(OptionsPageViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -27,17 +27,11 @@ class PageOneFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return DataBindingUtil.inflate<FragmentPageOneBinding>(
-            inflater,
-            R.layout.fragment_page_one,
-            container,
-            false
-        ).run {
-            viewModel = pageViewModel
-            lifecycleOwner = this@PageOneFragment
+        return DataBindingUtil.inflate<FragmentPageOptionsBinding>(inflater, R.layout.fragment_page_options, container, false).run {
+            viewModel = optionsPageViewModel
+            lifecycleOwner = this@OptionsPageFragment
             root
         }
     }
-
 
 }

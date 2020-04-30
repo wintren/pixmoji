@@ -6,14 +6,14 @@
 
         <variable
             name="viewModel"
-            type="rocks.wintren.pixmoji.home.pages.PageThreeViewModel" />
+            type="rocks.wintren.pixmoji.home.pages.CreatePageViewModel" />
     </data>
 
     <FrameLayout
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#96EFFF"
+        android:background="@drawable/background_fragment_create"
         android:clipChildren="true"
         tools:context=".home.HomeActivity">
 
