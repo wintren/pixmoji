@@ -11,15 +11,15 @@ import rocks.wintren.pixmoji.R
 import rocks.wintren.pixmoji.databinding.FragmentPagePickBinding
 import rocks.wintren.pixmoji.home.HomeActivityViewModel
 
-class PickPageFragment() : Fragment() {
+class PickPageFragment : Fragment() {
 
-    lateinit var parentViewModel: HomeActivityViewModel
     lateinit var pickPageViewModel: PickPageViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        parentViewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
+        val parentViewModel = ViewModelProvider(activity!!).get(HomeActivityViewModel::class.java)
         pickPageViewModel = ViewModelProvider(this).get(PickPageViewModel::class.java)
+        pickPageViewModel.parent = parentViewModel
     }
 
     override fun onCreateView(

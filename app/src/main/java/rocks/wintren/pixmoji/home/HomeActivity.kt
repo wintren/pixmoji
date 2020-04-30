@@ -1,22 +1,19 @@
 package rocks.wintren.pixmoji.home
 
-import android.graphics.Outline
 import android.os.Bundle
-import android.view.ViewOutlineProvider
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import kotlinx.android.synthetic.main.activity_home.*
+import com.google.android.material.tabs.TabLayoutMediator
 import rocks.wintren.pixmoji.R
-import rocks.wintren.pixmoji.d
 import rocks.wintren.pixmoji.databinding.ActivityHomeBinding
-import rocks.wintren.pixmoji.home.pages.DisplayPageFragment
-import rocks.wintren.pixmoji.home.pages.PickPageFragment
 import rocks.wintren.pixmoji.home.pages.CreatePageFragment
+import rocks.wintren.pixmoji.home.pages.DisplayPageFragment
 import rocks.wintren.pixmoji.home.pages.OptionsPageFragment
+import rocks.wintren.pixmoji.home.pages.PickPageFragment
 import rocks.wintren.pixmoji.utils.PageTransformers
 
 
@@ -26,27 +23,32 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupViewModel()
+
+        setupView()
     }
 
-    private fun setupViewModel() {
+    private fun setupView() {
         viewModel = ViewModelProvider(this).get(HomeActivityViewModel::class.java)
         val binding: ActivityHomeBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_home)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+        binding.run {
+            pages.run {
+                adapter = PagesAdapter(this@HomeActivity)
+                setPageTransformer(PageTransformers.ZoomOutSlide)
+            }
 
-        navigation.outlineProvider = ViewOutlineProvider.BACKGROUND
-        val outline = Outline()
-        navigation.outlineProvider.getOutline(navigation, outline)
-        d("${outline.canClip()}")
-        root.clipToOutline = true
-        navigation.clipToOutline = true
-
-//        pages.isUserInputEnabled = false
-        val pagesAdapter = PagesAdapter(this)
-        pages.adapter = pagesAdapter
-        pages.setPageTransformer(PageTransformers.ZoomOutSlide)
+            TabLayoutMediator(tabLayout, pages) { tab, position ->
+                tab.text = when (position) {
+                    0 -> "Pick Image"
+                    1 -> "Art options"
+                    2 -> "Create Art"
+                    3 -> "Display Art"
+                    else -> throw RuntimeException("Too far, man. Too far...")
+                }
+            }.attach()
+        }
     }
 
 }
@@ -54,12 +56,14 @@ class HomeActivity : AppCompatActivity() {
 
 class PagesAdapter(activity: FragmentActivity) : FragmentStateAdapter(activity) {
 
+    var myItemCount = 4
+
     override fun getItemCount(): Int {
-        return 4
+        return myItemCount
     }
 
     override fun createFragment(position: Int): Fragment {
-        return when (position){
+        return when (position) {
             0 -> PickPageFragment()
             1 -> OptionsPageFragment()
             2 -> CreatePageFragment()

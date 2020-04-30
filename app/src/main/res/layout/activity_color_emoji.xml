@@ -51,7 +51,7 @@
                 android:textSize="24sp"
                 android:gravity="center"
                 android:id="@+id/emojiDisplay"
-                android:background="@color/colorAccentLight"
+                android:background="#ff0"
                 android:layout_width="80dp"
                 android:layout_height="80dp" />
 

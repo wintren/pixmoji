@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#AF4233</color>
-    <color name="colorPrimaryLight">#E6715D</color>
-    <color name="colorPrimaryDark">#7A0E0C</color>
-    <color name="colorAccent">#00B37F</color>
-    <color name="colorAccentLight">#00DA97</color>
-    <color name="colorAccentDark">#007956</color>
+<!--    <color name="colorPrimary">#AF4233</color>-->
+<!--    <color name="colorPrimaryLight">#E6715D</color>-->
+<!--    <color name="colorPrimaryDark">#7A0E0C</color>-->
+<!--    <color name="colorAccent">#00B37F</color>-->
+<!--    <color name="colorAccentLight">#00DA97</color>-->
+<!--    <color name="colorAccentDark">#007956</color>-->
 
-    <color name="textOnPrimary">@color/white</color>
-    <color name="textOnAccent">@color/white</color>
+<!--    <color name="textOnPrimary">@color/white</color>-->
+<!--    <color name="textOnAccent">@color/white</color>-->
 
     <color name="white">#FFFFFF</color>
+
+
+    <!--    NEW -->
+    <color name="colorPrimary">#C04D39</color>
+    <color name="colorSecondary">#C06A0F</color>
+    <color name="android">#1EC409</color>
+    <color name="colorError">#FF0051</color>
+    <color name="colorPrimaryVariant">#5A2620</color>
+    <color name="colorSecondaryVariant">#0F5FC0</color>
+    <color name="colorSurface">#3F3F3F</color>
+
+    <color name="colorOnPrimary">#D69A9A</color>
+    <color name="colorOnSecondary">#D39F6D</color>
+    <color name="colorOnBackground">#4B4B4B</color>
+    <color name="colorOnError">#FF0000</color>
+    <color name="colorOnSurface">#ACACAC</color>
+    <color name="scrimBackground">#52000000</color>
 </resources>

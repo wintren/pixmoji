@@ -12,111 +12,21 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/root"
-        android:background="@drawable/background_home_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background_home_activity"
         android:clipChildren="true"
         tools:context=".home.HomeActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/navigation"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="12dp"
-            android:animateLayoutChanges="true"
-            android:clipChildren="true"
-            android:clipToPadding="true"
-            app:layout_constraintBottom_toTopOf="@+id/pages"
-            app:layout_constraintEnd_toEndOf="parent"
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_goneMarginBottom="8dp">
-
-            <TextView
-                android:id="@+id/pickButton"
-                visibleElseGone="@{viewModel.pickButtonVisible}"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:clickable="true"
-                android:background="@drawable/background_nav_button"
-                android:fontFamily="sans-serif-medium"
-                android:foreground="@drawable/ripple_60"
-                android:gravity="center"
-                android:text="@{viewModel.pickButtonText}"
-                android:textSize="16sp"
-                android:layout_margin="3dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/optionsButton"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent="0.3"
-                tools:text="Pick"
-                tools:visibility="visible" />
-
-            <TextView
-                android:id="@+id/optionsButton"
-                visibleElseGone="@{viewModel.optionsButtonVisible}"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:clickable="true"
-                android:fontFamily="sans-serif-medium"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center"
-                android:layout_margin="3dp"
-                android:background="@drawable/background_nav_button"
-                android:text="@{viewModel.optionsButtonText}"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/createButton"
-                app:layout_constraintStart_toEndOf="@+id/pickButton"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Options"
-                tools:visibility="visible" />
-
-            <TextView
-                android:id="@+id/createButton"
-                visibleElseGone="@{viewModel.createButtonVisible}"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_margin="3dp"
-                android:clickable="true"
-                android:fontFamily="sans-serif-medium"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center"
-                android:background="@drawable/background_nav_button"
-                android:text="@{viewModel.createButtonText}"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/artButton"
-                app:layout_constraintStart_toEndOf="@+id/optionsButton"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Create"
-                tools:visibility="visible" />
-
-            <TextView
-                android:id="@+id/artButton"
-                android:layout_margin="3dp"
-                visibleElseGone="@{viewModel.artButtonVisible}"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:clickable="true"
-                android:background="@drawable/background_nav_button"
-                android:fontFamily="sans-serif-medium"
-                android:foreground="?attr/selectableItemBackgroundBorderless"
-                android:gravity="center"
-                android:text="@{viewModel.artButtonText}"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/createButton"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Art"
-                tools:visibility="visible" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toTopOf="@id/pages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pages"
@@ -126,7 +36,114 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/navigation" />
+            app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/navigation"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_marginLeft="8dp"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_marginRight="8dp"-->
+<!--            android:layout_marginBottom="12dp"-->
+<!--            android:animateLayoutChanges="true"-->
+<!--            android:clipChildren="true"-->
+<!--            android:clipToPadding="true"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/pages"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_goneMarginBottom="8dp">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/pickButton"-->
+<!--                visibleElseGone="@{viewModel.pickButtonVisible}"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/background_nav_button"-->
+<!--                android:clickable="true"-->
+<!--                android:fontFamily="sans-serif-medium"-->
+<!--                android:foreground="@drawable/ripple_60"-->
+<!--                android:gravity="center"-->
+<!--                android:onClick="@{() -> viewModel.onPickButtonClick()}"-->
+<!--                android:text="@{viewModel.pickButtonText}"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/optionsButton"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintWidth_percent="0.3"-->
+<!--                tools:text="Pick"-->
+<!--                tools:visibility="visible" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/optionsButton"-->
+<!--                visibleElseGone="@{viewModel.optionsButtonVisible}"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:onClick="@{() -> viewModel.onOptionsButtonClick()}"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:background="@drawable/background_nav_button"-->
+<!--                android:clickable="true"-->
+<!--                android:fontFamily="sans-serif-medium"-->
+<!--                android:foreground="?attr/selectableItemBackgroundBorderless"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@{viewModel.optionsButtonText}"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/createButton"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/pickButton"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintWidth_percent="0.3"-->
+<!--                tools:text="Options"-->
+<!--                tools:visibility="visible" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/createButton"-->
+<!--                visibleElseGone="@{viewModel.createButtonVisible}"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:onClick="@{() -> viewModel.onCreateButtonClick()}"-->
+<!--                android:background="@drawable/background_nav_button"-->
+<!--                android:clickable="true"-->
+<!--                android:fontFamily="sans-serif-medium"-->
+<!--                android:foreground="?attr/selectableItemBackgroundBorderless"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@{viewModel.createButtonText}"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/artButton"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/optionsButton"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintWidth_percent="0.3"-->
+<!--                tools:text="Create"-->
+<!--                tools:visibility="visible" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/artButton"-->
+<!--                visibleElseGone="@{viewModel.displayButtonVisible}"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_margin="3dp"-->
+<!--                android:onClick="@{() -> viewModel.onDisplayButtonClick()}"-->
+<!--                android:background="@drawable/background_nav_button"-->
+<!--                android:clickable="true"-->
+<!--                android:fontFamily="sans-serif-medium"-->
+<!--                android:foreground="?attr/selectableItemBackgroundBorderless"-->
+<!--                android:gravity="center"-->
+<!--                android:text="@{viewModel.displayButtonText}"-->
+<!--                android:textSize="16sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/createButton"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintWidth_percent="0.3"-->
+<!--                tools:text="Art"-->
+<!--                tools:visibility="visible" />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
